@@ -1,0 +1,97 @@
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(circle at bottom, rgb(255, 115, 1), rgb(34, 0, 82) 50%);
+  background-repeat: no-repeat;
+  color: white;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  margin-top: 0;
+  margin-left: 50%;
+  transform: translate(-50%,-100%);
+  background-image: radial-gradient(circle at center bottom, black 90%, transparent);
+  width: 100vh;
+  height: 50vh;
+  border-top-left-radius: calc(100vh/2);
+  border-top-right-radius: calc(100vh/2);
+  z-index: -1;
+}
+
+header {
+  background-color: #252525;
+  margin: 0;
+  text-align: center;
+  padding: 20px 0;
+}
+
+header h1 {
+  margin: 0;
+  color: #fff;
+  padding: 10px;
+  font-size: 250%;
+}
+
+main {
+  padding-left: max(15px, 2vh);
+  height: calc(90vh - 36px);
+}
+
+.form div {
+  margin-top: 10px;
+}
+
+.birthday {
+  border: 0px;
+  outline: none;
+  color: white;
+  background-color: transparent;
+  text-align: right;
+}
+
+.birthday:hover {
+  cursor: pointer;
+}
+
+.birthday::-webkit-calendar-picker-indicator {
+  filter: invert();
+}
+
+.animalDiv label{
+  display: inline-block;
+  width: 98%;
+}
+
+
+
+.colorDiv {
+  --color: #ffffff;
+  color: var(--color);
+}
+
+.form input[type=color]:hover {
+  cursor: grab;
+}
+
+input[type='text'] {
+  border-width: 0px 0px 1px 0;
+  padding: 0.1em 10px;
+  outline: none;
+  color: white;
+  font-size: 100%;
+
+  background: 
+    linear-gradient(to right, rgba(100, 200, 200, 1), rgba(100, 200, 200, 1)),
+    linear-gradient(to right, #f0a, rgba(255, 0, 180, 1), #f0a);
+  background-size: 100% 1px, 0 1px;
+  background-position: 100% 100%, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 400ms;
+}
+
+input[type='text']:focus, input[type='text']:hover {
+  background-size: 0 1px, 100% 1px;
+}

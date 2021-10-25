@@ -1,0 +1,76 @@
+body {
+  display: flex;
+}
+
+body div {
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  border-radius: 50%;
+}
+
+.titleBox {
+  padding: 100px;
+  background-color: rgba(170, 170, 255, 0.5);
+  justify-content: center;
+  text-align: center;
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 3px 3px 20px #707070;
+}
+
+.imageBox {
+  padding: 100px 40px;
+  background-color: rgba(170, 170, 255, 0.7);
+  display: flex;≤
+  flex-direction: row;
+  transform: translate(-100px, 150px);
+  z-index: 0;
+  box-shadow: 3px 3px 20px #707070;
+}
+
+.imageBox img {
+  border-radius: 30%;
+}
+
+.meText h1 {
+  padding: 10px;
+  text-align: center;
+}
+
+.placeBox {
+  padding: 100px;
+  background-color: rgba(80, 232, 103, 0.7);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  transform: translate(-250px, 0);
+  box-shadow: 3px 3px 20px #707070;
+  z-index: -2;
+}
+
+/* .circle-container {
+  height: fit-content;
+  width: fit-content;
+  margin-left: 50vw;
+  margin-top: 25vh;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+.circle {
+  height: 75px;
+  display: flex;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: #00f;
+  transition: background-color 1s ease;
+}
+
+.circle:hover {
+  background-color: #f00;
+  transition: background-color 1s ease;
+  cursor: pointer;
+} */
