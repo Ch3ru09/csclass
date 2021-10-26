@@ -42,9 +42,9 @@ header a {
 
 header a h1 {
   margin: 0;
-  padding: max(2vh, 30px) 50px;
+  padding: max(2vh, 20px) 50px;
   color: #fff;
-  font-size: 250%;
+  font-size: 200%;
   transition: background-color 0.4s;
 }
 

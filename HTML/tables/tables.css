@@ -1,12 +1,43 @@
 body {
   overflow: hidden;
   background-image: url('../1920902.jpg');
+  margin: 0;
+  background-position: center;
+}
+
+header {
+  background-color: #252525;
+  margin: 0;
+  justify-content: center;
+  padding: 0px 0;
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+}
+
+header a {
+  text-decoration: none;
+}
+
+header a h1 {
+  margin: 0;
+  padding: max(2vh, 20px) 50px;
+  color: #fff;
+  font-size: 200%;
+  transition: background-color 0.4s;
+}
+
+header a h1:hover {
+  cursor: pointer;
+  background-color: rgb(70, 70, 70);
+  transition: background-color 0.4s;
 }
 
 .table {
   display: inline-block;
   border-collapse: collapse;
   border-width: 0;
+  margin-top: 2%;
   margin-left: 50%;
   transform: translateX(-50%);
   background-color: rgba(255, 255, 255, .9);

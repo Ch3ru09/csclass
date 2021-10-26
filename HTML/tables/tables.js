@@ -11,6 +11,11 @@ function getDays(days) {
 document.open()
 document.write(
   `<body>
+    <header>
+      <a href="../quiz/quiz.html"><h1>Quiz</h1></a>
+      <a href='../moi/moi.html'><h1>Moi</h1></a>
+      <a href="../tables/tables.html"><h1>Horaire</h1></a>
+    </header>
     <table border=1px class='table'>
       <thead id="headers">`
         /* days here */
@@ -104,9 +109,8 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           </tr>
         </tbody>` +
-    `</table>`+
-    `<a href='../quiz/quiz.html' style='color:white; text-decoration:none'><h1>Vers quiz</h1></a>`+
-  `</body>`
+    `</table>
+  </body>`
 )
 document.close()
 
