@@ -1,9 +1,20 @@
-  const colorpicker = document.getElementById('color')
-  colorpicker.addEventListener("input", updateFirst, false);
-  colorpicker.addEventListener("change", watchColorPicker, false);
+window.addEventListener("load", startup, false);
 
-function colorpicking(event) {
-  const pickerStyles = getComputedStyle(colorpicker)
-  const newColor = event.target.value
-  colorpicker.style.setProperty('--color', String(newColor))
+
+function startup() {
+  const color = document.querySelector("#color");
+  color.addEventListener("input", updateFirst, false);
+  color.select();
+}
+
+function updateFirst(event) {
+  var div = document.getElementById("colorDiv");
+  var dropdown = document.getElementById("subject");
+
+  if (div) {
+    div.style.color = event.target.value;
+  }
+  if (dropdown) {
+    dropdown.style.color = event.target.value;
+  }
 }

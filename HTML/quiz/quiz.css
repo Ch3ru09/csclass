@@ -24,15 +24,27 @@ body::after {
 header {
   background-color: #252525;
   margin: 0;
-  text-align: center;
-  padding: 20px 0;
+  justify-content: center;
+  padding: 0px 0;
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
 }
 
-header h1 {
+header a {
+  text-decoration: none;
+}
+
+header a h1 {
   margin: 0;
+  padding: max(2vh, 30px) 50px;
   color: #fff;
-  padding: 10px;
   font-size: 250%;
+}
+
+header a h1:hover {
+  cursor: pointer;
+  background-color: rgb(70, 70, 70)
 }
 
 main {
@@ -65,11 +77,15 @@ main {
   width: 98%;
 }
 
+#subject {
+  background-color: transparent;
+  border: 0;
+  color: #ff00ff;
+  outline: none;
+}
 
-
-.colorDiv {
-  --color: #ffffff;
-  color: var(--color);
+#subject:hover {
+  cursor: pointer;
 }
 
 .form input[type=color]:hover {

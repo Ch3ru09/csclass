@@ -9,7 +9,10 @@
   </head>
   <body id='body'>
     <header>
-      <h1>Quiz</h1>
+
+      <a href="./quiz.html"><h1>Quiz</h1></a>
+      <a href='../moi/moi.html'><h1>Moi</h1></a>
+      <a href="../tables/tables.html"><h1>Horaire</h1></a>
     </header>
     <main>
       <h1>
@@ -18,7 +21,7 @@
       <form action="POST" class='form'>
         <div>
           <label for='birthday'> Quelle est ma date date de naissance? </label>
-          <input type='date' name='birthday' value='birthday' class='birthday' id='birthday'>
+          <input type='date' name='birthday' value='' class='birthday' id='birthday'>
         </div>
         <div>
           <label for="nationality"> Quelle est mon pays d'origine? </label>
@@ -45,13 +48,25 @@
           <label for="city">Dans quelle ville vis-je?</label>
           <input type="text" name="city" value="" class="city" id="city">
         </div>
-        <div id='colorDiv'>
-          <label for="color">Je n'arrive plus à trouver de questions, voici un selecteur de couleur -></label>
-          <input type="color" name="color" value="" class="color" id="color">
+        <div>
+          <label for="subject">Quel est mon suject favori?</label>
+          <select name="subject" id="subject">
+            <option value="">—————————————</option>
+            <option value="math">Math</option>
+            <option value="english">English</option>
+            <option value="science">Science</option>
+            <option value="programming">Programming</option>
+            <option value="french">French?</option>
+            <option value="allAbove">All of the above</option>
+            <option value="none">None of the above</option>
+          </select>
         </div>
         <div></div>
         <div></div>
-        <div></div>
+        <div id='colorDiv'>
+          <label for="color" id='colorLabel'>Je n'arrive plus à trouver de questions, voici un selecteur de couleur -></label>
+          <input type="color" value="#ff00ff" class="color" id="color">
+        </div>
         <div>
           <label for=""></label>
           <input type="" name="" value="" class="" id="">

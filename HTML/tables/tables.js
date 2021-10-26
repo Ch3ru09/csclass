@@ -29,7 +29,7 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">EPS402-00002<br>Éduc. physique<br>Angel,&nbsp;M.<br>S-9.1</td>
           <td width="5" class="HorCellOdd" rowspan="1">HQC404-00404<br>Histoire QC/CAN<br>Hébert,&nbsp;A.<br>B-119</td>
           <td width="5" class="HorCellOdd" rowspan="1">FRA406E-00404<br>Français<br>Lahaie,&nbsp;G<br>B-120</td>
-          <td width="5" class="HorCellOdd" rowspan="1"><b>HQC404-00404<br>Histoire QC/CAN<br>Hébert,&nbsp;A.<br>B-119</b></td>
+          <td width="5" class="HorCellOdd" rowspan="1">HQC404-00404<br>Histoire QC/CAN<br>Hébert,&nbsp;A.<br>B-119</td>
           </tr>
 
           <tr height="5">
@@ -41,7 +41,7 @@ document.write(
           <td width="5" class="HorCellEven" rowspan="1">ECR404-00404<br>Eth. cult. rel.<br>Desrochers&nbsp;L<br>B-118</td>
           <td width="5" class="HorCellEven" rowspan="1">DRA402-00001<br>Art dramatique<br>Dumesnil,&nbsp;M<br>B-204<br><b>Conflit:</b><br>ECR404-00404<br>Eth. cult. rel.<br>Desrochers&nbsp;L<br>B-118</td>
           <td width="5" class="HorCellEven" rowspan="1">SCT404E-00404<br>Science tech.<br>Savaria,&nbsp;M.<br>B-14</td>
-          <td width="5" class="HorCellEven" rowspan="1"><b>EESL406-00003<br>Anglais enrichi<br>Beaton&nbsp;K.<br>B-104</b></td>
+          <td width="5" class="HorCellEven" rowspan="1">EESL406-00003<br>Anglais enrichi<br>Beaton&nbsp;K.<br>B-104</td>
           </tr>
 
           <tr height="5">
@@ -53,7 +53,7 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">SCT404E-00404<br>Science tech.<br>Savaria,&nbsp;M.<br>B-14</td>
           <td width="5" class="HorCellOdd" rowspan="1">MAT406E-00404<br>SN<br>Rémy&nbsp;M.-C.<br>A-202</td>
           <td width="5" class="HorCellOdd" rowspan="1">EESL406-00003<br>Anglais enrichi<br>Beaton&nbsp;K.<br>B-104</td>
-          <td width="5" class="HorCellOdd" rowspan="1"><b>SCT404E-00404<br>Science tech.<br>Savaria,&nbsp;M.<br>B-14</b></td>
+          <td width="5" class="HorCellOdd" rowspan="1">SCT404E-00404<br>Science tech.<br>Savaria,&nbsp;M.<br>B-14</td>
           </tr>
 
           <tr height="5">
@@ -65,7 +65,7 @@ document.write(
           <td width="5" class="HorCellEven" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           <td width="5" class="HorCellEven" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           <td width="5" class="HorCellEven" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
-          <td width="5" class="HorCellEven" rowspan="1"><b>ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></b></td>
+          <td width="5" class="HorCellEven" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           </tr>
 
           <tr height="5">
@@ -77,7 +77,7 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">FRA406E-00404<br>Français<br>Lahaie,&nbsp;G<br>B-120</td>
           <td width="5" class="HorCellOdd" rowspan="1">SCT404E-00404<br>Science tech.<br>Savaria,&nbsp;M.<br>B-14</td>
           <td width="5" class="HorCellOdd" rowspan="1">INF464-00002<br>Informatique<br>Dumont,&nbsp;I.<br>B-011</td>
-          <td width="5" class="HorCellOdd" rowspan="1"><b>MAT406E-00404<br>SN<br>Rémy&nbsp;M.-C.<br>A-202</b></td>
+          <td width="5" class="HorCellOdd" rowspan="1">MAT406E-00404<br>SN<br>Rémy&nbsp;M.-C.<br>A-202</td>
           </tr>
 
           <tr height="5">
@@ -89,7 +89,7 @@ document.write(
           <td width="5" class="HorCellEven" rowspan="1">EESL406-00003<br>Anglais enrichi<br>Beaton&nbsp;K.<br>B-104</td>
           <td width="5" class="HorCellEven" rowspan="1">FRA406E-00404<br>Français<br>Lahaie,&nbsp;G<br>B-120</td>
           <td width="5" class="HorCellEven" rowspan="1">DRA402-00001<br>Art dramatique<br>Dumesnil,&nbsp;M<br>B-204</td>
-          <td width="5" class="HorCellEven" rowspan="1"><b>EPS402-00002<br>Éduc. physique<br>Angel,&nbsp;M.<br>S-9.1</b></td>
+          <td width="5" class="HorCellEven" rowspan="1">EPS402-00002<br>Éduc. physique<br>Angel,&nbsp;M.<br>S-9.1</td>
           </tr>
 
           <tr height="5">
@@ -101,7 +101,7 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
-          <td width="5" class="HorCellOdd" rowspan="1"><b>ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></b></td>
+          <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           </tr>
         </tbody>` +
     `</table>
