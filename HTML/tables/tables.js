@@ -104,8 +104,9 @@ document.write(
           <td width="5" class="HorCellOdd" rowspan="1">ABS400-00404<br>Étude/ Activité<br>Germain,&nbsp;L.<br></td>
           </tr>
         </tbody>` +
-    `</table>
-  </body>`
+    `</table>`+
+    `<a href='../quiz/quiz.html' style='color:white; text-decoration:none'><h1>Vers quiz</h1></a>`+
+  `</body>`
 )
 document.close()
 
