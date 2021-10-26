@@ -40,11 +40,13 @@ header a h1 {
   padding: max(2vh, 30px) 50px;
   color: #fff;
   font-size: 250%;
+  transition: background-color 0.4s;
 }
 
 header a h1:hover {
   cursor: pointer;
-  background-color: rgb(70, 70, 70)
+  background-color: rgb(70, 70, 70);
+  transition: background-color 0.4s;
 }
 
 main {
@@ -75,6 +77,11 @@ main {
 .animalDiv label{
   display: inline-block;
   width: 98%;
+  color: rgba(100, 200, 200, 1);
+}
+
+.animalDiv label:hover{
+  cursor: pointer;
 }
 
 #subject {
@@ -94,7 +101,7 @@ main {
 
 input[type='text'] {
   border-width: 0px 0px 1px 0;
-  padding: 0.1em 10px;
+  padding: 0.1em 1px;
   outline: none;
   color: white;
   font-size: 100%;
