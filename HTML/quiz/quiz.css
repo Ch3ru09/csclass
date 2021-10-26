@@ -1,3 +1,7 @@
+* {
+  outline: none;
+}
+
 body {
   margin: 0;
   height: 100%;
@@ -62,7 +66,6 @@ main {
 
 .birthday {
   border: 0px;
-  outline: none;
   color: white;
   background-color: transparent;
   text-align: right;
@@ -89,7 +92,6 @@ main {
   background-color: transparent;
   border: 0;
   color: #ff00ff;
-  outline: none;
 }
 
 #subject:hover {
@@ -103,7 +105,6 @@ main {
 input[type='text'] {
   border-width: 0px 0px 1px 0;
   padding: 0.1em 1px;
-  outline: none;
   color: white;
   font-size: 100%;
 
@@ -124,7 +125,6 @@ input[type='submit'] {
   margin-top: 30px;
   border-radius: 40px;
   border: solid 3px rgba(100, 200, 200);
-  outline: none;
   font-size: 100%;
   padding: 10px 20px;
   margin-left: 10vw;
@@ -132,6 +132,10 @@ input[type='submit'] {
   color: #fff;
   background-color: transparent;
   transition: background-color 400ms;
+}
+
+input[type='radio'] {
+  
 }
 
 input[type='submit']:hover {
