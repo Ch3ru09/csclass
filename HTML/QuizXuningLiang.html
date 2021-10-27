@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title> Quiz </title>
+    <link rel="icon" href="../right-arrow.png">
+  </head>
+  <body id='body'>
+    <style>
+      * {
+        outline: none;
+      }
+
+      body {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        background: radial-gradient(circle at bottom, rgb(255, 115, 1), rgb(34, 0, 82) 50%);
+        background-repeat: no-repeat;
+        color: white;
+        overflow-y: hidden;
+      }
+
+      body::after {
+        content: "";
+        position: absolute;
+        margin-top: 0;
+        margin-left: 50%;
+        transform: translate(-50%,-100%);
+        background-image: radial-gradient(circle at center bottom, black 90%, transparent);
+        width: 100vh;
+        height: 50vh;
+        border-top-left-radius: calc(100vh/2);
+        border-top-right-radius: calc(100vh/2);
+        z-index: -1;
+      }
+
+      header {
+        background-color: #252525;
+        margin: 0;
+        justify-content: center;
+        padding: 0px 0;
+        display: flex;
+        flex-direction: row;
+        height: fit-content;
+      }
+
+      header a {
+        text-decoration: none;
+      }
+
+      header a h1 {
+        margin: 0;
+        padding: max(2vh, 20px) 50px;
+        color: #fff;
+        font-size: 200%;
+        transition: background-color 0.4s;
+      }
+
+      header a h1:hover {
+        cursor: pointer;
+        background-color: rgb(70, 70, 70);
+        transition: background-color 0.4s;
+      }
+
+      main {
+        padding-left: max(15px, 2vh);
+        height: calc(90vh);
+        width: fit-content;
+      }
+
+      .form div {
+        margin-top: 10px;
+      }
+
+      .birthday {
+        border: 0px;
+        color: white;
+        background-color: transparent;
+        text-align: right;
+      }
+
+      .birthday:hover {
+        cursor: pointer;
+      }
+
+      .birthday::-webkit-calendar-picker-indicator {
+        filter: invert();
+      }
+
+      .animalDiv label{
+        display: inline-block;
+        color: rgba(100, 200, 200, 1);
+      }
+
+      .animalDiv label:hover{
+        cursor: pointer;
+      }
+
+      #subject {
+        background-color: transparent;
+        border: 0;
+        color: #ff00ff;
+      }
+
+      #subject:hover {
+        cursor: pointer;
+      }
+
+      .form input[type=color]:hover {
+        cursor: grab;
+      }
+
+      input[type='text'] {
+        border-width: 0px 0px 1px 0;
+        padding: 0.1em 1px;
+        color: white;
+        font-size: 100%;
+
+        background:
+          linear-gradient(to right, rgba(100, 200, 200, 1), rgba(100, 200, 200, 1)),
+          linear-gradient(to right, #f0a, rgba(255, 0, 180, 1), #f0a);
+        background-size: 100% 1px, 0 1px;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        transition: background-size 400ms;
+      }
+
+      input[type='text']:focus, input[type='text']:hover {
+        background-size: 0 1px, 100% 1px;
+      }
+
+      input[type='submit'] {
+        margin-top: 30px;
+        border-radius: 40px;
+        border: solid 3px rgba(100, 200, 200);
+        font-size: 100%;
+        padding: 10px 20px;
+        margin-left: 10vw;
+
+        color: #fff;
+        background-color: transparent;
+        transition: background-color 400ms;
+      }
+
+      input[type='submit']:hover {
+        cursor: pointer;
+
+        background-color: rgba(100, 200, 200);
+      }
+    </style>
+    <header>
+      <a href="../quiz/quiz.html"><h1>Quiz</h1></a>
+      <a href='../moi/moi.html'><h1>Moi</h1></a>
+      <a href="../tables/tables.html"><h1>Horaire</h1></a>
+    </header>
+    <main>
+      <h1>
+        Bienvenue au quiz de Xu ning Liang
+      </h1>
+      <form action="POST" class='form'>
+        <div>
+          <label for='birthday'> Quelle est ma date date de naissance? </label>
+          <input type='date' value='' class='birthday' id='birthday'>
+        </div>
+        <div>
+          <label for="nationality"> Quelle est mon pays d'origine? </label>
+          <input type="text" value="" class="nationality" id='nationality'>
+        </div>
+        <div>
+          <label for="school"> Où suis-je allé pour l'école primaire? </label>
+          <input type="text" value="" class="school" id="school">
+        </div>
+        <div class='animalDiv'>
+          <article>Quel est mon animal préféré?</article>
+          <div>
+            <input type="radio" name="animal" value="cat" class="cat" id="cat">
+            <label for="cat">cat</label>
+          </div>
+          <div>
+            <input type="radio" name="animal" value="dog" class="dog" id="dog">
+            <label for="dog">dog</label>
+          </div>
+          <div>
+            <input type="radio" name="animal" value="mouse" class="mouse" id="mouse">
+            <label for="mouse">mouse</label>
+          </div>
+          <div>
+            <input type="radio" name="animal" value="all" class="all" id="all">
+            <label for="all">all of the above</label>
+          </div>
+          <div>
+            <input type="radio" name="animal" value="none" class="none" id="none">
+            <label for="none">you got jabait and it's none</label>
+          </div>
+        </div>
+        <div>
+          <label for="city">Dans quelle ville vis-je?</label>
+          <input type="text" value="" class="city" id="city">
+        </div>
+        <div>
+          <label for="subject">Quel est mon sujet favori?</label>
+          <select name="subject" id="subject">
+            <option value="">+————————+</option>
+            <option value="math">Math</option>
+            <option value="english">English</option>
+            <option value="science">Science</option>
+            <option value="programming">Programming</option>
+            <option value="french">French?</option>
+            <option value="allAbove">All of the above</option>
+            <option value="none">None of the above</option>
+          </select>
+        </div>
+        <div>
+          <label for="ageToCanada">À quel âge suis-je venu au Canada?</label>
+          <input type="text" value="" class="ageToCanada" id="ageToCanada">
+        </div>
+        <div>
+          <label for="hobby">Quel est mon passe-temps favori?</label>
+          <input type="text" value="" class="hobby" id="hobby">
+        </div>
+        <div>
+          <label for="sport">Quel est mon sport préféré?</label>
+          <input type="text" value="" class="sport" id="sport">
+        </div>
+        <div id='colorDiv'>
+          <label for="color" id='colorLabel'>Je n'arrive plus à trouver de questions, voici un selecteur de couleur -></label>
+          <input type="color" value="#ff00ff" class="color" id="color">
+        </div>
+        <input type="submit" value='submit'>
+      </form>
+    </main>
+  </body>
+  <script>
+    window.addEventListener("load", startup, false);
+
+
+    function startup() {
+      const color = document.querySelector("#color");
+      color.addEventListener("input", updateFirst, false);
+      color.select();
+    }
+
+    function updateFirst(event) {
+      var div = document.getElementById("colorDiv");
+      var dropdown = document.getElementById("subject");
+
+      if (div) {
+        div.style.color = event.target.value;
+      }
+      if (dropdown) {
+        dropdown.style.color = event.target.value;
+      }
+    }
+
+  </script>
+</html>
