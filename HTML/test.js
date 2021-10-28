@@ -11,7 +11,6 @@ function multiply(num1, num2) {
   for (var i = 0; i <= factor2-1; i++) {
     product += factor1;
     product = parseFloat(product.toPrecision(15))
-    console.log('*>>', product);
   };
   return {
     product,
@@ -42,7 +41,6 @@ function check(num1, num2) {
     }
   } else {
     const resultChange = change(num2);
-    console.log('>>', resultChange);
     return {
       factor1: num1,
       factor2: resultChange.num,

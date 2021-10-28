@@ -1,6 +1,5 @@
 window.addEventListener("load", startup, false);
 
-
 function startup() {
   const color = document.querySelector("#color");
   color.addEventListener("input", updateFirst, false);
@@ -17,4 +16,14 @@ function updateFirst(event) {
   if (dropdown) {
     dropdown.style.color = event.target.value;
   }
+}
+
+
+const form = document.getElementsByTagName('form')
+
+
+function submitForm() {
+  const inputNames = []
+  const answers = []
+  console.log('>>', form);
 }
