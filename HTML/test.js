@@ -1,29 +1,37 @@
-console.log(multiply(1.1, 1.2).product);
+module.exports.multiply = (param1, param2) => {
+  console.log('>>', multiply(param1, param2));
+}
+module.exports.divide = (param1, param2) => {
+  console.log('>>', divide(param1, param2));
+}
 
 function multiply(num1, num2) {
   const resultCheck = check(num1, num2)
-  console.log('>>>', resultCheck);
 
-  const factor1 = resultCheck.factor1;
-  const factor2 = resultCheck.factor2;
+  const factor1 = parseFloat(resultCheck.factor1);
+  const factor2 = parseInt(resultCheck.factor2);
+  const times = parseInt(resultCheck.times)
 
   let product = 0;
-  for (var i = 0; i <= factor2-1; i++) {
+  for (var i = 0; i < factor2; i++) {
     product += factor1;
     product = parseFloat(product.toPrecision(15))
+    console.log('>>', product);
   };
-  return {
-    product,
+  if (times != 0) {
+    product = parseFloat((product/times).toPrecision(15))
   }
-}
+  return product
+};
 
 function divide(num1, num2) {
   // don't forget to do division
-  check(num2)
-  let buff = 0;
-  for (let i = 0; i <= num2-1; i++) {
-    buff += num1;
+  let quotient = 0;
+  while (num1 > num2) {
+    num1 -= num2;
+    quotient++;
   }
+  return quotient + ', ' + parseFloat(num1.toPrecision(15))
 }
 
 function check(num1, num2) {
@@ -33,11 +41,13 @@ function check(num1, num2) {
     return {
       factor1: num2,
       factor2: num1,
+      times: 0,
     }
   } else if (num2-Math.floor(num2) === 0) {
     return {
       factor1: num1,
       factor2: num2,
+      times: 0,
     }
   } else {
     const resultChange = change(num2);
@@ -52,7 +62,7 @@ function check(num1, num2) {
 function change(num) {
   let times = 0;
   while(num-Math.floor(num) != 0) {
-    num = multiply(num, 10).product;
+    num = multiply(num, 10);
     times += 10;
   }
   return {

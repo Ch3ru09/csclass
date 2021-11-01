@@ -4,6 +4,8 @@ function startup() {
   const color = document.querySelector("#color");
   color.addEventListener("input", updateFirst, false);
   color.select();
+  const submit = document.querySelector("#submit");
+  submit.addEventListener("click", submitForm, false)
 }
 
 function updateFirst(event) {
@@ -18,12 +20,20 @@ function updateFirst(event) {
   }
 }
 
-
-const form = document.getElementsByTagName('form')
-
-
 function submitForm() {
-  const inputNames = []
-  const answers = []
-  console.log('>>', form);
+  const form = document.forms['form']
+  const names = getFormNames(form)
 }
+
+function getFormNames(form) {
+  const inputNames = []
+  for (var i = 0; i < form.length; i++) {
+    if (form[i].type != 'radio' && form[i].id != 'submit' && form[i].id != 'color') {
+      inputNames.push(form[i].id)
+    }
+  }
+  return inputNames
+}
+
+  const formAnswers = []
+  const answers = []
