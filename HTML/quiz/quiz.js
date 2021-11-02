@@ -23,6 +23,7 @@ function updateFirst(event) {
 function submitForm() {
   const form = document.forms['form']
   const names = getFormNames(form)
+  getFormValues(form)
 }
 
 function getFormNames(form) {
@@ -35,5 +36,18 @@ function getFormNames(form) {
   return inputNames
 }
 
-  const formAnswers = []
-  const answers = []
+function getFormValues(form) {
+  const values = []
+  for (var i = 0; i < form.length; i++) {
+    const value = form[i].value.toLowerCase()
+    if (form[i].type != 'radio' && form[i].type != 'submit' && value != submit) {
+      values.push(value)
+    } else if (form[i].type == 'radio') {
+      form[i].checked && values.push(value)
+    }
+  }
+  return values
+}
+
+const formAnswers = []
+const answers = []
