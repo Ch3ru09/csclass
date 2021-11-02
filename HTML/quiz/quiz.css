@@ -9,7 +9,6 @@ body {
   background: radial-gradient(circle at bottom, rgb(255, 115, 1), rgb(34, 0, 82) 50%);
   background-repeat: no-repeat;
   color: white;
-  overflow-y: hidden;
 }
 
 body::after {
