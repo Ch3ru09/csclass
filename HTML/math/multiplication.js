@@ -1,11 +1,14 @@
-module.exports.multiply = (param1, param2) => {
-  console.log('>>', multiply(param1, param2));
-}
-module.exports.divide = (param1, param2) => {
-  console.log('>>', divide(param1, param2));
-}
+const division = require('./division.js')
+exports.multiply = multiply
+exports.getSign = getSign
 
 function multiply(num1, num2) {
+  const checkSign = getSign(num1, num2)
+
+  num1 = parseFloat(checkSign.num1)
+  num2 = parseFloat(checkSign.num2)
+  const sign = checkSign.sign
+
   const resultCheck = check(num1, num2)
 
   const factor1 = parseFloat(resultCheck.factor1);
@@ -16,23 +19,16 @@ function multiply(num1, num2) {
   for (var i = 0; i < factor2; i++) {
     product += factor1;
     product = parseFloat(product.toPrecision(15))
-    console.log('>>', product);
   };
   if (times != 0) {
     product = parseFloat((product/times).toPrecision(15))
+    /*
+      PLEASE ADD DIVISION HERE!!
+    */
   }
-  return product
+  return parseFloat(sign + product)
 };
 
-function divide(num1, num2) {
-  // don't forget to do division
-  let quotient = 0;
-  while (num1 > num2) {
-    num1 -= num2;
-    quotient++;
-  }
-  return quotient + ', ' + parseFloat(num1.toPrecision(15))
-}
 
 function check(num1, num2) {
   let factor1
@@ -68,5 +64,37 @@ function change(num) {
   return {
     num: num,
     times: times,
+  }
+}
+
+function getSign(num1, num2) {
+  if (num1 < 0 && num2 < 0) {
+    num1 = num1 - num1 - num1
+    num2 = num2 - num2 - num2
+    return {
+      sign: '',
+      num1,
+      num2,
+    }
+  } else if (num1 < 0) {
+    num1 = num1 - num1 - num1
+    return {
+      sign: '-',
+      num1,
+      num2,
+    }
+  } else if (num2 < 0) {
+    num2 = num2 - num2 - num2
+    return {
+      sign: '-',
+      num1,
+      num2,
+    }
+  } else {
+    return {
+      sign: '',
+      num1,
+      num2,
+    }
   }
 }
