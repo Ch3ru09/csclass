@@ -17,7 +17,7 @@ function startup() {
   color.addEventListener("input", updateFirst, false);
   color.select();
   const submit = document.querySelector("#submit");
-  submit.addEventListener("click", submitForm, false)
+  // submit.addEventListener("click", submitForm, false)
 }
 
 function updateFirst(event) {
@@ -38,7 +38,7 @@ function submitForm() {
     const value = form[i].value;
     if (!value) {
       alert('Fill all the fields')
-      return;
+      return
     }
   }
   const values = getValues(form)
@@ -51,7 +51,7 @@ function getValues(form) {
   for (var i = 0; i < form.length; i++) {
     const value = form[i].value.toLowerCase()
     const name = form[i].id
-    if (form[i].type != 'radio' && form[i].type != 'submit' && form[i].type != 'color' && name != submit) {
+    if (form[i].type != 'radio' && form[i].id != 'button' && form[i].type != 'color') {
       values.push({name, value})
     } else if (form[i].type == 'radio') {
       form[i].checked && values.push({name: 'animal', value})
