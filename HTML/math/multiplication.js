@@ -5,28 +5,28 @@ exports.getSign = getSign
 function multiply(num1, num2) {
   const checkSign = getSign(num1, num2)
 
-  num1 = parseFloat(checkSign.num1)
-  num2 = parseFloat(checkSign.num2)
+  num1 = Number(checkSign.num1)
+  num2 = Number(checkSign.num2)
   const sign = checkSign.sign
 
   const resultCheck = check(num1, num2)
 
-  const factor1 = parseFloat(resultCheck.factor1);
-  const factor2 = parseInt(resultCheck.factor2);
-  const times = parseInt(resultCheck.times)
+  const factor1 =   Number(resultCheck.factor1);
+  const factor2 = Number(resultCheck.factor2);
+  const times = Number(resultCheck.times)
 
   let product = 0;
   for (var i = 0; i < factor2; i++) {
     product += factor1;
-    product = parseFloat(product.toPrecision(15))
+    product = Number(product.toPrecision(15))
   };
   if (times != 0) {
-    product = parseFloat((product/times).toPrecision(15))
+    product = Number((product/times).toPrecision(15))
     /*
       PLEASE ADD DIVISION HERE!!
     */
   }
-  return parseFloat(sign + product)
+  return Number(sign + product)
 };
 
 

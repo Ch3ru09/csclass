@@ -1,4 +1,5 @@
-const multiplication = require('./multiplication.js')
+// const multiplication = require('./multiplication.js')
+const multiplication = require('./fastermultiplication.js')
 const division = require('./division.js')
 
 module.exports.multiply = (param1, param2) => {

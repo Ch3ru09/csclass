@@ -16,8 +16,6 @@ function startup() {
   const color = document.querySelector("#color");
   color.addEventListener("input", updateFirst, false);
   color.select();
-  const submit = document.querySelector("#submit");
-  // submit.addEventListener("click", submitForm, false)
 }
 
 function updateFirst(event) {
