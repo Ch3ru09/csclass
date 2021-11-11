@@ -1,3 +1,7 @@
+export default function md5(s) {
+  return hex(md51(s));
+}
+
 function md5cycle(x, k) {
 var a = x[0], b = x[1], c = x[2], d = x[3];
 
@@ -159,10 +163,6 @@ function hex(x) {
 for (var i=0; i<x.length; i++)
 x[i] = rhex(x[i]);
 return x.join('');
-}
-
-export default function md5(s) {
-return hex(md51(s));
 }
 
 /* this function is much faster,
