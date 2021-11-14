@@ -5,7 +5,8 @@ const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
 names.map(element => {
   for (let i = 0; i < 2; i++) {
-
+    const path = String('./' + element + '-' + Number(i+1) + '.png')
+    console.log('>>', path);
   }
   return {
     animal: element,

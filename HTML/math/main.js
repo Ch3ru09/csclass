@@ -9,13 +9,13 @@ module.exports.multiply = (param1, param2) => {
 module.exports.divide = (param1, param2) => {
   const res = division.divide(param1, param2);
   const quotient = res.quotient;
-  const reminder = res.reminder;
+  const remainder = res.remainder;
   const err = res.err
   if (err) {
     console.log('!>>', err);
-  } else if (reminder == 0) {
-    console.log('>> Q = ', quotient);
+  } else if (remainder == 0) {
+    console.log('>> Q =', quotient);
   } else {
-    console.log('>> Q =', quotient, ', R =', reminder);
+    console.log('>> Q =', quotient, ', R =', remainder);
   }
 }

@@ -11,7 +11,7 @@ function multiply(num1, num2) {
 
   const resultCheck = check(num1, num2)
 
-  const factor1 =   Number(resultCheck.factor1);
+  const factor1 = Number(resultCheck.factor1);
   const factor2 = Number(resultCheck.factor2);
   const times = Number(resultCheck.times)
 
@@ -20,10 +20,10 @@ function multiply(num1, num2) {
     product += factor1;
     product = Number(product.toPrecision(15))
   };
-  if (times != 0) {
+  if (times) {
     product = Number((product/times).toPrecision(15))
     /*
-      PLEASE ADD DIVISION HERE!!
+      !! PLEASE ADD DIVISION HERE!!
     */
   }
   return Number(sign + product)
@@ -56,10 +56,10 @@ function check(num1, num2) {
 }
 
 function change(num) {
-  let times = 0;
+  let times = 1;
   while(num-Math.floor(num) != 0) {
     num = multiply(num, 10);
-    times += 10;
+    times = multiply(times, 10)
   }
   return {
     num: num,
