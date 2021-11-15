@@ -1,4 +1,4 @@
-export default function md5(s) {
+module.exports.md5 = (s) => {
   return hex(md51(s));
 }
 

@@ -11,7 +11,39 @@ header {
   padding: 0;
 }
 
+main {
+  text-align: center;
+}
+
 .difficulty {
   margin: 0;
   padding: 10px 20px;
+}
+
+.diffDrop {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.5s ease;
+}
+
+.show {
+  height: 25px;
+  display: block;
+  transition: height 0.5s ease;
+}
+
+#diffButton {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+}
+
+#diffButton:hover {
+  background-color: rgb(50, 50, 50);
+  cursor: pointer;
+}
+
+input[type='radio'] {
+  margin: 5px 0px 5px 20px;
 }

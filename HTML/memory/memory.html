@@ -6,16 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../right-arrow.png">
     <link rel="stylesheet" href="./memory.css">
-    <script src="./memory.js" type="module"></script>
     <title>Memory Game</title>
+    
   </head>
   <body>
     <header>
-      <h1 class="difficulty">Difficulty</h1>
+      <button id="diffButton" onclick="diffDrop()"><h1 class="difficulty" >Difficulty</h1></button>
+      <form class="diffDrop" id="diffDrop">
+        <input type="radio" id="2x3" name="diff" value="2x3">
+        <label for="2x3">2x3</label>
+        <input type="radio" id="2x4" name="diff" value="2x4">
+        <label for="2x4">2x4</label>
+        <input type="radio" id="2x5" name="diff" value="2x5">
+        <label for="2x5">2x5</label>
+        <input type="radio" id="3x4" name="diff" value="3x4" checked="checked">
+        <label for="3x4">3x4</label>
+      </form>
+      <script language="javascript">
+        function diffDrop() {
+          const x = document.getElementById('diffDrop')
+          x.classList.toggle('show')
+        }
+      </script>
     </header>
     <main id="main">
       <h2>Memory Game</h2>
       <h3 id="chosenDifficulty">Your current difficulty: </h3>
+      <table border="1 px">
+        <tbody id="game"></tbody>
+      </table>
     </main>
+    <script src="bundle.js" charset="utf-8"></script>
+    
   </body>
 </html>
