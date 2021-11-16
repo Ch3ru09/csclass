@@ -4,16 +4,26 @@ const game = document.getElementById('game')
 const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
 const diff = document.getElementsByName('diff')
-diff.forEach(e => {
-  if (e.checked == true) {
-    const chosenDiff = e.value.split('x')
-    const width = Number(chosenDiff[1])
-    const height = Number(chosenDiff[0])
-    for (let i = 0; i < height; i++) {
-      game.innerHTML += `<tr id="row-${i+1}"></tr>`
+diff.onclick = getRows
+
+function getRows() {
+  diff.forEach(e => {
+    if (e.checked == true) {
+      const chosenDiff = e.value.split('x')
+      const width = Number(chosenDiff[1])
+      const height = Number(chosenDiff[0])
+      let rowsToAdd = ''
+      for (let i = 0; i < height; i++) {
+        rowsToAdd += `<tr id="row-${i+1}"></tr>`
+      }
+      game.innerHTML = rowsToAdd;
+      getColumns(width, height)
     }
-    getColumns(width, height)
-  }
+  })
+} getRows()
+
+document.getElementsByName('diff').on('click', () => {
+  console.log('1');
 })
 
 function getColumns(width, height) {
@@ -25,14 +35,18 @@ function getColumns(width, height) {
   }
   for (let i = 0; i < height; i++) {
     row = 'row-' + Number(i + 1)
-    console.log(row);
+    let toAdd = ''
+    const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
-      const t = document.getElementById(row);
       const num = ranInt(0, numbers.length-1);
-      t.innerHTML += `<td id="${numbers[num]}"><button></button></td>`;
+      toAdd += `<td><button id="${numbers[num]}"></button></td>`
       numbers.splice(num, 1)
     }
+    t.innerHTML = toAdd;
   }
+  // for (var i = 0; i < array.length; i++) {
+  //   array[i]
+  // }
 }
 
 function ranInt(min, max) {
