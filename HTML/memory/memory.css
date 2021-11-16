@@ -72,6 +72,9 @@ main button {
   background-position: center;
   background-size: cover;
   border-radius: 50%;
+  transition:
+    border-radius 0.25s ease,
+    background-image 0.05s ease;
 }
 
 main button:hover {

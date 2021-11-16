@@ -4,7 +4,6 @@ const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
 
 
-
 const diff = document.getElementsByName('diff')
 
 diff.forEach(e => {
@@ -32,40 +31,64 @@ function getRows() {
 
 function getColumns(width, height) {
   let row
-  const numbers = []
-  const max = Number(height*width)
-  for (let i = 0; i < max; i++) {
-    numbers.push(i+1)
-  }
+  const numbers = [...Array(height*width).keys()]
   for (let i = 0; i < height; i++) {
     row = 'row-' + Number(i + 1)
     let toAdd = ''
     const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
       const num = ranInt(0, numbers.length-1);
-      toAdd += `<td><button id="${numbers[num]}"></button></td>`
+      const salt = ranString(7)
+      toAdd += `<td id="squares">
+          <button id="${numbers[num]}" onClick="squareClick(this)"></button>
+        </td>`
       numbers.splice(num, 1)
     }
     t.innerHTML = toAdd;
   }
-  // for (var i = 0; i < array.length; i++) {
-  //   array[i]
-  // }
+
+}
+
+function diffDrop() {
+  const x = document.getElementById('diffDrop')
+  x.classList.toggle('show')
+}
+
+let oldElement
+let newElement
+let counter = 0
+
+function squareClick(element) {
+  if (oldElement && oldElement == element) {
+    return
+  }
+  for (var i = 0; i < 2; i++) {
+    if (i == 0) {
+      oldElement = element
+    } else {
+      i = 0
+      newElement = element
+      setTimeout(() => {
+        
+      }, 1000);
+    }
+  }
+  console.log('test');
+  element.style.backgroundImage = "url('./public/chat-1.png')"
+  element.style.borderRadius = "25%"
 }
 
 function ranInt(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1))
 }
 
-const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/{}$[]';
-
 function ranString(length) {
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789/{}$[]';
     let result = '';
     const charactersLength = characters.length;
     for ( let i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    console.log(result);
     return result;
 }
 /*
