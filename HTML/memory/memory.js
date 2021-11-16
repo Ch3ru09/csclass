@@ -1,14 +1,22 @@
-const md5 = require('md5')
-
 const game = document.getElementById('game')
 const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
+
+
+
+
 const diff = document.getElementsByName('diff')
-diff.onclick = getRows
+
+diff.forEach(e => {
+  e.onclick = getRows
+})
 
 function getRows() {
   diff.forEach(e => {
     if (e.checked == true) {
+      const showDiff = document.getElementById('chosenDifficulty')
+      showDiff.innerHTML = `Your current difficulty: `+ e.value
+
       const chosenDiff = e.value.split('x')
       const width = Number(chosenDiff[1])
       const height = Number(chosenDiff[0])
@@ -21,10 +29,6 @@ function getRows() {
     }
   })
 } getRows()
-
-document.getElementsByName('diff').on('click', () => {
-  console.log('1');
-})
 
 function getColumns(width, height) {
   let row

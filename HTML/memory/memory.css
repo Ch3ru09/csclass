@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #15ffaa;
 }
 
 header {
@@ -47,6 +48,8 @@ main {
 
 table {
   align-items: center;
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
 
 input[type='radio'] {
@@ -59,8 +62,18 @@ td {
 }
 
 main button {
-  width: 100%;
-  height:100%;
+  width: inherit;
+  height: inherit;
+  color: transparent;
+  font-size: 0%;
   outline: none;
   border: none;
+  background-image: url(./public/mark/interrogation.png);
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+main button:hover {
+  cursor: grab;
 }
