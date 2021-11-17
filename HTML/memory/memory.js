@@ -54,28 +54,31 @@ function diffDrop() {
   x.classList.toggle('show')
 }
 
-let oldElement
-let newElement
-let counter = 0
-
 function squareClick(element) {
+  let oldElement
+  let newElement
+  let counter = 0
+
   if (oldElement && oldElement == element) {
     return
   }
-  for (var i = 0; i < 2; i++) {
-    if (i == 0) {
-      oldElement = element
-    } else {
-      i = 0
-      newElement = element
-      setTimeout(() => {
-        
-      }, 1000);
-    }
+  if (counter == 0) {
+    oldElement = element;
+    counter++;
+  } else {
+    newElement = element;
+    setTimeout(() => {
+      counter = 0;
+      oldElement.style.backgroundImage =
+        oldElement.style.borderRadius =
+        newElement.style.backgroundImage =
+        newElement.style.borderRadius = '';
+      oldElement = newElement = undefined;
+    }, 1000);
   }
-  console.log('test');
-  element.style.backgroundImage = "url('./public/chat-1.png')"
-  element.style.borderRadius = "25%"
+  element.style.backgroundImage = '';
+  element.style.borderRadius = "25%";
+  return
 }
 
 function ranInt(min, max) {

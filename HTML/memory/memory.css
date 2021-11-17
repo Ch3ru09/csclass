@@ -74,7 +74,7 @@ main button {
   border-radius: 50%;
   transition:
     border-radius 0.25s ease,
-    background-image 0.05s ease;
+    background-image 0.25s ease;
 }
 
 main button:hover {
