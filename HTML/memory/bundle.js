@@ -54,20 +54,34 @@ function diffDrop() {
   x.classList.toggle('show')
 }
 
-let oldElement
-let newElement
-let counter = 0
-
 function squareClick(element) {
+
+  let counter
+  let oldElement
+  let newElement
+
+  counter.trim() == '' && counter = 0
+
   if (oldElement && oldElement == element) {
     return
   }
-  for (var i = 0; i < 2; i++) {
-    i == 0 ? oldElement = element : newElement = element
+  if (counter == 0) {
+    oldElement = element;
+    counter++;
+  } else {
+    newElement = element;
+    setTimeout(() => {
+      counter = 0;
+      oldElement.style.backgroundImage =
+        oldElement.style.borderRadius =
+        newElement.style.backgroundImage =
+        newElement.style.borderRadius = '';
+      oldElement = newElement = undefined;
+    }, 1000);
   }
-  console.log('test');
-  element.style.backgroundImage = "url('./public/chat-1.png')"
-  element.style.borderRadius = "25%"
+  element.style.backgroundImage = '';
+  element.style.borderRadius = "25%";
+  return
 }
 
 function ranInt(min, max) {

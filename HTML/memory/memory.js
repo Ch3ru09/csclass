@@ -55,9 +55,12 @@ function diffDrop() {
 }
 
 function squareClick(element) {
+
+  let counter
   let oldElement
   let newElement
-  let counter = 0
+
+  counter.trim() == '' && counter = 0
 
   if (oldElement && oldElement == element) {
     return
