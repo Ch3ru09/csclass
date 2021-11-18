@@ -29,9 +29,14 @@ main {
 }
 
 .show {
-  height: 25px;
+  height: 50px;
   display: block;
   transition: height 0.5s ease;
+}
+
+.diffLabel {
+  margin-left: 1vw;
+  display: inline-block;
 }
 
 #diffButton {
@@ -64,17 +69,20 @@ td {
 main button {
   width: inherit;
   height: inherit;
+
   color: transparent;
   font-size: 0%;
   outline: none;
   border: none;
+  
+  --transTime: 250ms;
   background-image: url(./public/mark/interrogation.png);
   background-position: center;
   background-size: cover;
   border-radius: 50%;
   transition:
-    border-radius 0.25s ease,
-    background-image 0.25s ease;
+    border-radius min(var(--transTime), 250ms) ease,
+    background-image min(var(--transTime), 250ms) ease;
 }
 
 main button:hover {

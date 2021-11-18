@@ -4,6 +4,26 @@ const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
 
 
+const chooseSpeed = document.getElementById('speed');
+
+function addSpeedInput() {
+  const speeds = [2000, 1000, 500, 250, 100];
+  speeds.forEach((e, i) => {
+    chooseSpeed.innerHTML +=
+      `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==0?'checked':''}>
+      <label for="${e}ms">${e/1000}s</label>`
+  })
+  
+} addSpeedInput()
+
+function detectSpeed() {
+  const squares = game.getElementsByTagName('button')
+  for (let i = 0; i < squares.length; i++) {
+    const e = squares[i];
+    e.styles.setProperty('--transTime', gameSpeed+'ms');
+  }
+}
+
 const diff = document.getElementsByName('diff')
 
 diff.forEach(e => {
@@ -54,22 +74,30 @@ function diffDrop() {
   x.classList.toggle('show')
 }
 
+let counter = 0
+let oldElement
+let newElement
+let stop
+
 function squareClick(element) {
-
-  let counter
-  let oldElement
-  let newElement
-
-  counter.trim() == '' && counter = 0
-
-  if (oldElement && oldElement == element) {
+  if (oldElement && oldElement == element || stop == true) {
     return
   }
+
+  const speed = document.getElementsByName('speed');
+  let gameSpeed
+  speed.forEach(e => {
+    if (e.checked==true) {
+      gameSpeed = Number(e.value.split('m')[0])
+    }
+  })
+  
   if (counter == 0) {
     oldElement = element;
     counter++;
   } else {
     newElement = element;
+    stop = true
     setTimeout(() => {
       counter = 0;
       oldElement.style.backgroundImage =
@@ -77,9 +105,10 @@ function squareClick(element) {
         newElement.style.backgroundImage =
         newElement.style.borderRadius = '';
       oldElement = newElement = undefined;
-    }, 1000);
+      stop = false
+    }, gameSpeed);
   }
-  element.style.backgroundImage = '';
+  element.style.backgroundImage = 'url("./public/chat-1.png")';
   element.style.borderRadius = "25%";
   return
 }

@@ -13,14 +13,25 @@
     <header>
       <button id="diffButton" onclick="diffDrop()"><h1 class="difficulty" >Difficulty</h1></button>
       <form class="diffDrop" id="diffDrop">
-        <input type="radio" id="2x3" name="diff" value="2x3">
-        <label for="2x3">2x3</label>
-        <input type="radio" id="2x4" name="diff" value="2x4">
-        <label for="2x4">2x4</label>
-        <input type="radio" id="2x5" name="diff" value="2x5">
-        <label for="2x5">2x5</label>
-        <input type="radio" id="3x4" name="diff" value="3x4" checked="checked">
-        <label for="3x4">3x4</label>
+        <div>
+          <div class="diffLabel">
+            Display:
+          </div>
+          <input type="radio" id="2x3" name="diff" value="2x3">
+          <label for="2x3">2x3</label>
+          <input type="radio" id="2x4" name="diff" value="2x4">
+          <label for="2x4">2x4</label>
+          <input type="radio" id="2x5" name="diff" value="2x5">
+          <label for="2x5">2x5</label>
+          <input type="radio" id="3x4" name="diff" value="3x4" checked="checked">
+          <label for="3x4">3x4</label>
+        </div>
+        <div id="speed">
+          <div class="diffLabel">
+            Speed:
+          </div>
+          
+        </div>
       </form>
     </header>
     <main id="main">
