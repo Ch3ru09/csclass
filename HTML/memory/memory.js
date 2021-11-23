@@ -15,15 +15,19 @@ function addSpeedInput() {
   
 } addSpeedInput()
 
-function detectSpeed(gameSpeed) {
-  let dimensions
-  diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
-  const arr = [...Array(dimensions).keys()];
-  arr.forEach(e => {
-    const button = document.getElementById(e.toString());
-    button.style.setProperty('--transTime', gameSpeed+'ms')
-  })
+function getAnswers() {
+  diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}}); 
 }
+
+// function detectSpeed(gameSpeed) {
+//   let dimensions
+//   diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
+//   const arr = [...Array(dimensions).keys()];
+//   arr.forEach(e => {
+//     const button = document.getElementById(e.toString());
+//     button.style.setProperty('--transTime', gameSpeed+'ms')
+//   })
+// }
 
 const diff = document.getElementsByName('diff')
 
@@ -93,7 +97,7 @@ function squareClick(element) {
       gameSpeed = Number(e.value.split('m')[0])
     }
   })
-  detectSpeed(gameSpeed)
+  // detectSpeed(gameSpeed)
 
   if (counter == 0) {
     oldElement = element;
