@@ -23,13 +23,13 @@ main {
 }
 
 .diffDrop {
-  height: 0;
+  height: 50px;
   overflow: hidden;
   transition: height 0.5s ease;
 }
 
-.show {
-  height: 50px;
+.hide {
+  height: 0px;
   display: block;
   transition: height 0.5s ease;
 }
@@ -75,14 +75,14 @@ main button {
   outline: none;
   border: none;
   
-  --transTime: 250ms;
+  --transTime: 500ms;
   background-image: url(./public/mark/interrogation.png);
   background-position: center;
   background-size: cover;
   border-radius: 50%;
   transition:
     border-radius min(var(--transTime), 250ms) ease,
-    background-image min(var(--transTime), 250ms) ease;
+    background-image min(var(--transTime), 500ms) ease;
 }
 
 main button:hover {

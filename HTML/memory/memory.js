@@ -1,17 +1,16 @@
 const game = document.getElementById('game')
 const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 
-
-
+const answers = []
 
 const chooseSpeed = document.getElementById('speed');
 
 function addSpeedInput() {
-  const speeds = [2000, 1000, 500, 250, 100];
+  const speeds = [2000, 1000, 500, 250, 0];
   speeds.forEach((e, i) => {
     chooseSpeed.innerHTML +=
       `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==0?'checked':''}>
-      <label for="${e}ms">${e/1000}s</label>`
+      <label for="${e}ms">${e/1000}s${i==speeds.length-1?'???':''}</label>`;
   })
   
 } addSpeedInput()
@@ -58,7 +57,7 @@ function getColumns(width, height) {
     const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
       const num = ranInt(0, numbers.length-1);
-      const salt = ranString(7)
+      // *** const salt = ranString(7)
       toAdd += `<td id="squares">
           <button id="${numbers[num]}" onClick="squareClick(this)"></button>
         </td>`
@@ -71,7 +70,7 @@ function getColumns(width, height) {
 
 function diffDrop() {
   const x = document.getElementById('diffDrop')
-  x.classList.toggle('show')
+  x.classList.toggle('hide')
 }
 
 let counter = 0
@@ -98,8 +97,9 @@ function squareClick(element) {
   } else {
     newElement = element;
     stop = true
+    counter = 0;
     setTimeout(() => {
-      counter = 0;
+      
       oldElement.style.backgroundImage =
         oldElement.style.borderRadius =
         newElement.style.backgroundImage =
