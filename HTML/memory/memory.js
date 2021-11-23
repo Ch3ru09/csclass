@@ -15,12 +15,14 @@ function addSpeedInput() {
   
 } addSpeedInput()
 
-function detectSpeed() {
-  const squares = game.getElementsByTagName('button')
-  for (let i = 0; i < squares.length; i++) {
-    const e = squares[i];
-    e.styles.setProperty('--transTime', gameSpeed+'ms');
-  }
+function detectSpeed(gameSpeed) {
+  let dimensions
+  diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
+  const arr = [...Array(dimensions).keys()];
+  arr.forEach(e => {
+    const button = document.getElementById(e.toString());
+    button.style.setProperty('--transTime', gameSpeed+'ms')
+  })
 }
 
 const diff = document.getElementsByName('diff')
@@ -82,6 +84,7 @@ function squareClick(element) {
   if (oldElement && oldElement == element || stop == true) {
     return
   }
+  
 
   const speed = document.getElementsByName('speed');
   let gameSpeed
@@ -90,7 +93,8 @@ function squareClick(element) {
       gameSpeed = Number(e.value.split('m')[0])
     }
   })
-  
+  detectSpeed(gameSpeed)
+
   if (counter == 0) {
     oldElement = element;
     counter++;
