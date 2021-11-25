@@ -4,6 +4,7 @@ const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
 const answers = []
 
 const chooseSpeed = document.getElementById('speed');
+const diff = document.getElementsByName('diff')
 
 function addSpeedInput() {
   const speeds = [2000, 1000, 500, 250, 0];
@@ -12,12 +13,30 @@ function addSpeedInput() {
       `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==0?'checked':''}>
       <label for="${e}ms">${e/1000}s${i==speeds.length-1?'???':''}</label>`;
   })
-  
+
 } addSpeedInput()
 
 function getAnswers() {
-  diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}}); 
-}
+  let dimensions
+  diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
+  const ids = [...Array(dimensions).keys()];
+  names.forEach((item, i) => {
+    if (i < Number(dimensions/2)) {
+      for (let index = 0; index < 2; index++) {
+        const eh = ranInt(0, ids.length)
+        const id = ids[eh];
+        ids.splice(eh, 1)
+        const tag = document.getElementById(String(id));
+        const hashed = md5(String(tag));
+        answers.push({
+          path: String(item+'-'+Number(index+1)+'.png'),
+          id: hashed
+        })
+      }
+    }
+  });
+  console.log(answers);
+} getAnswers()
 
 // function detectSpeed(gameSpeed) {
 //   let dimensions
@@ -28,8 +47,6 @@ function getAnswers() {
 //     button.style.setProperty('--transTime', gameSpeed+'ms')
 //   })
 // }
-
-const diff = document.getElementsByName('diff')
 
 diff.forEach(e => {
   e.onclick = getRows
@@ -63,9 +80,9 @@ function getColumns(width, height) {
     const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
       const num = ranInt(0, numbers.length-1);
-      // *** const salt = ranString(7)
+      const salt = ranString(7)
       toAdd += `<td id="squares">
-          <button id="${numbers[num]}" onClick="squareClick(this)"></button>
+          <button id="${numbers[num]}" onClick="squareClick(this)">${salt}</button>
         </td>`
       numbers.splice(num, 1)
     }
@@ -80,15 +97,16 @@ function diffDrop() {
 }
 
 let counter = 0
+let clicks = 0
 let oldElement
 let newElement
-let stop
+let stop /* stop = true; for starting */
 
 function squareClick(element) {
   if (oldElement && oldElement == element || stop == true) {
     return
   }
-  
+
 
   const speed = document.getElementsByName('speed');
   let gameSpeed
@@ -107,7 +125,7 @@ function squareClick(element) {
     stop = true
     counter = 0;
     setTimeout(() => {
-      
+
       oldElement.style.backgroundImage =
         oldElement.style.borderRadius =
         newElement.style.backgroundImage =
