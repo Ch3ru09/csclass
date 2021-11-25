@@ -134,7 +134,11 @@ button {
   transition: background-color 400ms;
 }
 
+<<<<<<< Updated upstream
 button:hover {
+=======
+input[type='submit']:hover {
+>>>>>>> Stashed changes
   cursor: pointer;
 
   background-color: rgba(100, 200, 200);

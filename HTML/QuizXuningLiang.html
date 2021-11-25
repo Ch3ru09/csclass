@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+<<<<<<< Updated upstream
   <head>
     <meta charset="utf-8">
     <title> Quiz </title>
@@ -151,6 +152,160 @@
     </style>
     <header>
       <a href="../quiz/quiz.html"><h1>Quiz</h1></a>
+=======
+  <style media="screen">
+    * {
+      outline: none;
+    }
+
+    body {
+      margin: 0;
+      height: 100%;
+      width: 100%;
+      background: radial-gradient(circle at bottom, rgb(255, 115, 1), rgb(34, 0, 82) 50%);
+      background-repeat: no-repeat;
+      color: white;
+      overflow-y: hidden;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      margin-top: 0;
+      margin-left: 50%;
+      transform: translate(-50%,-100%);
+      background-image: radial-gradient(circle at center bottom, black 90%, transparent);
+      width: 100vh;
+      height: 50vh;
+      border-top-left-radius: calc(100vh/2);
+      border-top-right-radius: calc(100vh/2);
+      z-index: -1;
+    }
+
+    header {
+      background-color: #252525;
+      margin: 0;
+      justify-content: center;
+      padding: 0px 0;
+      display: flex;
+      flex-direction: row;
+      height: fit-content;
+    }
+
+    header a {
+      text-decoration: none;
+    }
+
+    header a h1 {
+      margin: 0;
+      padding: max(2vh, 20px) 50px;
+      color: #fff;
+      font-size: 200%;
+      transition: background-color 0.4s;
+    }
+
+    header a h1:hover {
+      cursor: pointer;
+      background-color: rgb(70, 70, 70);
+      transition: background-color 0.4s;
+    }
+
+    main {
+      padding-left: max(15px, 2vh);
+      height: calc(90vh);
+      width: fit-content;
+    }
+
+    .form div {
+      margin-top: 10px;
+    }
+
+    .birthday {
+      border: 0px;
+      color: white;
+      background-color: transparent;
+      text-align: right;
+    }
+
+    .birthday:hover {
+      cursor: pointer;
+    }
+
+    .birthday::-webkit-calendar-picker-indicator {
+      filter: invert();
+    }
+
+    .animalDiv label{
+      display: inline-block;
+      color: rgba(100, 200, 200, 1);
+    }
+
+    .animalDiv label:hover{
+      cursor: pointer;
+    }
+
+    #subject {
+      background-color: transparent;
+      border: 0;
+      color: #ff00ff;
+    }
+
+    #subject:hover {
+      cursor: pointer;
+    }
+
+    .form input[type=color]:hover {
+      cursor: grab;
+    }
+
+    input[type='text'] {
+      border-width: 0px 0px 1px 0;
+      padding: 0.1em 1px;
+      color: white;
+      font-size: 100%;
+
+      background:
+        linear-gradient(to right, rgba(100, 200, 200, 1), rgba(100, 200, 200, 1)),
+        linear-gradient(to right, #f0a, rgba(255, 0, 180, 1), #f0a);
+      background-size: 100% 1px, 0 1px;
+      background-position: 100% 100%, 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 400ms;
+    }
+
+    input[type='text']:focus, input[type='text']:hover {
+      background-size: 0 1px, 100% 1px;
+    }
+
+    input[type='submit'] {
+      margin-top: 30px;
+      border-radius: 40px;
+      border: solid 3px rgba(100, 200, 200);
+      font-size: 100%;
+      padding: 10px 20px;
+      margin-left: 10vw;
+
+      color: #fff;
+      background-color: transparent;
+      transition: background-color 400ms;
+    }
+
+    input[type='submit']:hover {
+      cursor: pointer;
+
+      background-color: rgba(100, 200, 200);
+    }
+
+  </style>
+  <head>
+    <meta charset="utf-8">
+    <title> Quiz </title>
+    <link rel="icon" href="../right-arrow.png">
+  </head>
+  <body id='body'>
+    <header>
+      <a href="./quiz.html"><h1>Quiz</h1></a>
+>>>>>>> Stashed changes
       <a href='../moi/moi.html'><h1>Moi</h1></a>
       <a href="../tables/tables.html"><h1>Horaire</h1></a>
     </header>
@@ -252,6 +407,9 @@
         dropdown.style.color = event.target.value;
       }
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   </script>
 </html>
