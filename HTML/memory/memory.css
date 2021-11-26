@@ -66,7 +66,7 @@ td {
   width: 150px;
 }
 
-main button {
+#game button {
   width: inherit;
   height: inherit;
 
@@ -79,6 +79,7 @@ main button {
   background-image: url(./public/mark/interrogation.png);
   background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
   border-radius: 50%;
   transition:
     border-radius min(var(--transTime), 250ms) ease,

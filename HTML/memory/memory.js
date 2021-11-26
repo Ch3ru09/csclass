@@ -10,7 +10,7 @@ function addSpeedInput() {
   const speeds = [2000, 1000, 500, 250, 0];
   speeds.forEach((e, i) => {
     chooseSpeed.innerHTML +=
-      `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==0?'checked':''}>
+      `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==2?'checked':''}>
       <label for="${e}ms">${e/1000}s${i==speeds.length-1?'???':''}</label>`;
   })
 
@@ -23,11 +23,11 @@ function getAnswers() {
   names.forEach((item, i) => {
     if (i < Number(dimensions/2)) {
       for (let index = 0; index < 2; index++) {
-        const eh = ranInt(0, ids.length)
+        const eh = ranInt(0, ids.length-1)
         const id = ids[eh];
         ids.splice(eh, 1)
         const tag = document.getElementById(String(id));
-        const hashed = md5(String(tag));
+        const hashed = md5(tag.innerHTML);
         answers.push({
           path: String(item+'-'+Number(index+1)+'.png'),
           id: hashed
@@ -35,8 +35,7 @@ function getAnswers() {
       }
     }
   });
-  console.log(answers);
-} getAnswers()
+}
 
 // function detectSpeed(gameSpeed) {
 //   let dimensions
@@ -80,7 +79,7 @@ function getColumns(width, height) {
     const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
       const num = ranInt(0, numbers.length-1);
-      const salt = ranString(7)
+      const salt = ranString(32)
       toAdd += `<td id="squares">
           <button id="${numbers[num]}" onClick="squareClick(this)">${salt}</button>
         </td>`
@@ -91,6 +90,8 @@ function getColumns(width, height) {
 
 }
 
+getAnswers()
+
 function diffDrop() {
   const x = document.getElementById('diffDrop')
   x.classList.toggle('hide')
@@ -100,41 +101,67 @@ let counter = 0
 let clicks = 0
 let oldElement
 let newElement
-let stop /* stop = true; for starting */
+let stop = true /* stop = true; for starting */
+let path1
+let path2
+const frozen = []
+let timer
+
+document.getElementById('start').onClick = start
+
+function start() {
+  stop = true;
+  while () {
+
+  }
+}
 
 function squareClick(element) {
+  for (let e of frozen) {
+    if (e == element) {
+      return
+    }
+  }
   if (oldElement && oldElement == element || stop == true) {
     return
   }
 
-
   const speed = document.getElementsByName('speed');
   let gameSpeed
   speed.forEach(e => {
-    if (e.checked==true) {
-      gameSpeed = Number(e.value.split('m')[0])
+    if (e.checked == true) {
+      gameSpeed = e.id.split('m')[0];
     }
-  })
+  });
+
   // detectSpeed(gameSpeed)
 
   if (counter == 0) {
-    oldElement = element;
+    oldElement = element
+    path1 = answers.find(e => e.id == md5(element.innerHTML)).path;
     counter++;
   } else {
-    newElement = element;
+    newElement = element
+    path2 = answers.find(e => e.id == md5(element.innerHTML)).path;
     stop = true
     counter = 0;
-    setTimeout(() => {
-
-      oldElement.style.backgroundImage =
-        oldElement.style.borderRadius =
-        newElement.style.backgroundImage =
-        newElement.style.borderRadius = '';
-      oldElement = newElement = undefined;
+    if (path1.split('-')[0] == path2.split('-')[0]) {
+      frozen.push(oldElement, newElement)
       stop = false
-    }, gameSpeed);
+      oldElement = newElement = undefined;
+    } else {
+      setTimeout(() => {
+        oldElement.style.backgroundImage =
+          oldElement.style.borderRadius =
+          newElement.style.backgroundImage =
+          newElement.style.borderRadius = '';
+        oldElement = newElement = undefined;
+        stop = false
+      }, gameSpeed);
+    }
   }
-  element.style.backgroundImage = 'url("./public/chat-1.png")';
+  clicks++
+  element.style.backgroundImage = `url("./public/${counter == 1?path1:path2}")`;
   element.style.borderRadius = "25%";
   return
 }
@@ -152,6 +179,3 @@ function ranString(length) {
     }
     return result;
 }
-/*
- * const path = String('./public/' + element + '-' + Number(i+1) + '.png')
-*/
