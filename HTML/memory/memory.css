@@ -23,15 +23,18 @@ main {
 }
 
 .diffDrop {
+  padding: 10px 5px;
   height: 50px;
   overflow: hidden;
-  transition: height 0.5s ease;
+  transition: height 0.5s ease, padding 0.5s ease;
+  background-color: rgb(40, 40, 40);
 }
 
 .hide {
+  padding: 0;
   height: 0px;
   display: block;
-  transition: height 0.5s ease;
+  transition: height 0.5s ease, padding 0.5s ease;
 }
 
 .diffLabel {
@@ -75,7 +78,7 @@ td {
   outline: none;
   border: none;
 
-  --transTime: 500ms;
+  --transTime: 250ms;
   background-image: url(./public/mark/interrogation.png);
   background-position: center;
   background-size: cover;
@@ -83,9 +86,57 @@ td {
   border-radius: 50%;
   transition:
     border-radius min(var(--transTime), 250ms) ease,
-    background-image min(var(--transTime), 500ms) ease;
+    background-image min(var(--transTime), 250ms) ease;
 }
 
 main button:hover {
   cursor: grab;
+}
+
+#main div {
+  display: inline-block;
+}
+
+#start {
+  border-radius: 10px;
+}
+
+#main div button {
+  outline: none;
+  background-color: transparent;
+  border: 3px solid green;
+  margin: 0;
+  font-size: 150%;
+  margin: 0 10px 10px 10px;
+}
+
+#idk {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
+}
+
+#time {
+  font-size: 200%;
+  margin: 0 10px;
+  border: 3px solid green;
+  border-radius: 10px;
+  padding: 0 10px; 
+}
+
+.play {
+  color: transparent;
+  background-image: url('./public/icons/play-icon.png');
+  background-size: cover;
+  background-position: center;
+  height: max(5vh, 40px);
+  width: max(5vh, 40px);
+  border-radius: 100%;
+  transition: background-image 250ms ease-in-out, transform 750ms ease-in-out;
+}
+
+.pause {
+  transform: rotate(360deg);
+  background-image: url('./public/icons/stop-icon.png');
 }

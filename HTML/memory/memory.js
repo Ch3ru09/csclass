@@ -48,8 +48,14 @@ function getAnswers() {
 // }
 
 diff.forEach(e => {
-  e.onclick = getRows
-})
+  e.onclick = diffReload
+});
+
+function diffReload() {
+  answers.splice(0, answers.length)
+  getRows()
+  getAnswers()
+};
 
 function getRows() {
   diff.forEach(e => {
@@ -78,7 +84,7 @@ function getColumns(width, height) {
     let toAdd = ''
     const t = document.getElementById(row);
     for (let index = 0; index < width; index++) {
-      const num = ranInt(0, numbers.length-1);
+      const num = 0
       const salt = ranString(32)
       toAdd += `<td id="squares">
           <button id="${numbers[num]}" onClick="squareClick(this)">${salt}</button>
@@ -105,14 +111,29 @@ let stop = true /* stop = true; for starting */
 let path1
 let path2
 const frozen = []
-let timer
+let timer = 0;
+let play = false;
+var t
 
-document.getElementById('start').onClick = start
-
-function start() {
-  stop = true;
-  while () {
-
+function start(e) {
+  if (!e) {
+    stop = false;
+    play = true;
+    const idk = document.getElementById('idk');
+    if (!document.getElementById('pause')) {
+      idk.innerHTML += `<button id="pause" class="play" onclick="start(this)">stop</button>`;
+      t = setInterval(() => {
+        const time = document.getElementById('time');
+        if (frozen.length == answers.length) {
+          clearInterval(t);
+          console.log(t);
+        }
+        timer += 0.1;
+        time.innerHTML = timer.toFixed(0);
+      }, 100)
+    }
+  } else {
+    e.classList.toggle('pause');
   }
 }
 
