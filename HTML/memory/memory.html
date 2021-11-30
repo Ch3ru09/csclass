@@ -38,7 +38,20 @@
       <h2>Memory Game</h2>
       <h3 id="chosenDifficulty"></h3>
 
-      <div id="idk"><button id="start" onClick="start()">Start</button><div id="time">0</div></div>
+      <div id="idk">
+        <div>
+          <article>clicks :</article>
+          <article id="clicks">0</article>
+        </div>
+        <button id="start" onClick="start()">Start</button>
+        <div id="timeBox">
+          <article>temps :</article>
+          <article id="time">0</article>
+        </div>
+        <article>
+          <button id="pause" class="play" onclick="start(this)">stop</button>
+        </article>
+      </div>
       <table>
         <tbody id="game"></tbody>
       </table>

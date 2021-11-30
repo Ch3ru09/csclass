@@ -107,21 +107,22 @@ let counter = 0
 let clicks = 0
 let oldElement
 let newElement
-let stop = true /* stop = true; for starting */
+let stop = true
 let path1
 let path2
 const frozen = []
 let timer = 0;
-let play = false;
-var t
+let t
 
 function start(e) {
   if (!e) {
-    stop = false;
-    play = true;
     const idk = document.getElementById('idk');
-    if (!document.getElementById('pause')) {
-      idk.innerHTML += `<button id="pause" class="play" onclick="start(this)">stop</button>`;
+    if (!document.getElementsByClassName('lever')[0]) {
+      stop = false;
+      const startButton = document.getElementById('start');
+      startButton.innerHTML = null;
+      const pause = document.getElementById('pause');
+      pause.classList.add('lever');
       t = setInterval(() => {
         const time = document.getElementById('time');
         if (frozen.length == answers.length) {
@@ -135,6 +136,14 @@ function start(e) {
   } else {
     e.classList.toggle('pause');
   }
+}
+
+function reset() {
+  counter = timer = clicks = 0
+  stop = true
+  frozen = [];
+  oldElement = newElement = path1 =
+  path2 = t = undefined;
 }
 
 function squareClick(element) {
@@ -182,6 +191,8 @@ function squareClick(element) {
     }
   }
   clicks++
+  const c = document.getElementById('clicks')
+  c.innerHTML = clicks
   element.style.backgroundImage = `url("./public/${counter == 1?path1:path2}")`;
   element.style.borderRadius = "25%";
   return
