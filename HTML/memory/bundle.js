@@ -52,9 +52,9 @@ diff.forEach(e => {
 });
 
 function diffReload() {
-  answers.splice(0, answers.length)
-  getRows()
-  getAnswers()
+  answers.splice(0, answers.length);
+  getRows();
+  getAnswers();
 };
 
 function getRows() {
@@ -117,10 +117,11 @@ let t
 function start(e) {
   if (!e) {
     const idk = document.getElementById('idk');
+    const startButton = document.getElementById('start');
     if (!document.getElementsByClassName('lever')[0]) {
       stop = false;
-      const startButton = document.getElementById('start');
       startButton.innerHTML = null;
+      startButton.classList.add('reset');
       const pause = document.getElementById('pause');
       pause.classList.add('lever');
       t = setInterval(() => {
@@ -132,27 +133,32 @@ function start(e) {
         timer += 0.1;
         time.innerHTML = timer.toFixed(0);
       }, 100)
+    } else {
+
+      reset()
+
     }
   } else {
+
     e.classList.toggle('pause');
   }
 }
 
 function reset() {
+  clearInterval(t)
   counter = timer = clicks = 0
   stop = true
-  frozen = [];
+  frozen.splice(0, frozen.length)
   oldElement = newElement = path1 =
   path2 = t = undefined;
+  time.innerHTML = timer.toFixed(0);
+  const c = document.getElementById('clicks')
+  c.innerHTML = clicks
+  diffReload()
 }
 
 function squareClick(element) {
-  for (let e of frozen) {
-    if (e == element) {
-      return
-    }
-  }
-  if (oldElement && oldElement == element || stop == true) {
+  if (oldElement && oldElement == element || stop == true || frozen.includes(element)) {
     return
   }
 

@@ -97,32 +97,35 @@ main button:hover {
   display: inline-block;
 }
 
-#start {
+.start {
   border-radius: 10px;
+  width: 40px, fit-content;
+  background-position: center;
+  background-size: 75%;
+  background-repeat: no-repeat;
+  background-image: none;
+  transition: background-image 250ms ease-in-out, width 750ms ease-in-out;
 }
 
-#idk button {
+.idk button {
   outline: none;
   background-color: transparent;
   border: 3px solid green;
   margin: 0;
   font-size: 150%;
-  margin: 0 10px 10px 10px;
+  margin: 0 10px;
   height: max(5vh, 40px);
 }
 
-#start {
-  width: max(5vh, 40px, 15%);
-}
-
-#idk {
+.idk {
+  width: 100%;
   position: relative;
   align-items: center;
   justify-content: center;
   vertical-align: center;
 }
 
-#idk > div {
+.idk > div {
   font-size: 200%;
   margin: 0 10px;
   border: 3px solid green;
@@ -130,12 +133,21 @@ main button:hover {
   padding: 0 10px;
 }
 
-#idk > div > article {
+.idk > div > article {
   display: inline-block;
 }
 
-#idk > article {
+.idk > article {
   display: inline-block;
+}
+
+.reset {
+  width: 40px;
+  color: transparent;
+  margin-top: 20px;
+  padding: 0px 6px;
+  background-image: url('./public/icons/reload.png');
+  border-radius: 50%;
 }
 
 .play {
