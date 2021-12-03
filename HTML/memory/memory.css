@@ -93,21 +93,17 @@ main button:hover {
   cursor: grab;
 }
 
-#main div {
-  display: inline-block;
-}
-
 .start {
   border-radius: 10px;
   width: 40px, fit-content;
   background-position: center;
-  background-size: 75%;
+  background-size: fill;
   background-repeat: no-repeat;
   background-image: none;
   transition: background-image 250ms ease-in-out, width 750ms ease-in-out;
 }
 
-.idk button {
+.start {
   outline: none;
   background-color: transparent;
   border: 3px solid green;
@@ -115,22 +111,39 @@ main button:hover {
   font-size: 150%;
   margin: 0 10px;
   height: max(5vh, 40px);
+  transition: transform 1s ease-in-out;
 }
 
 .idk {
   width: 100%;
+  overflow: hidden;
   position: relative;
-  align-items: center;
   justify-content: center;
-  vertical-align: center;
 }
 
-.idk > div {
+.cl, .tb, .play {
   font-size: 200%;
   margin: 0 10px;
   border: 3px solid green;
   border-radius: 10px;
   padding: 0 10px;
+  height: 40px;
+  width: 180px; 
+  display: inline-block;
+  overflow: hidden;
+  transition: display 1s ease;
+}
+
+.play {
+  width: max(5vh, 40px);
+  height: max(5vh, 40px);
+  background-color: transparent;
+  color: transparent;
+  background-image: url('./public/icons/stop-icon.png');
+  background-size: 100%;
+  background-position: center;
+  border-radius: 100%;
+  transition: background-image 250ms ease-in-out, transform 750ms ease-in-out;
 }
 
 .idk > div > article {
@@ -139,28 +152,36 @@ main button:hover {
 
 .idk > article {
   display: inline-block;
+  margin: 0;
 }
 
 .reset {
-  width: 40px;
+  transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+  width: max(5vh, 40px);
   color: transparent;
   margin-top: 20px;
   padding: 0px 6px;
   background-image: url('./public/icons/reload.png');
   border-radius: 50%;
-}
-
-.play {
-  color: transparent;
-  background-image: url('./public/icons/play-icon.png');
-  background-size: cover;
-  background-position: center;
-  width: max(5vh, 40px);
-  border-radius: 100%;
-  transition: background-image 250ms ease-in-out, transform 750ms ease-in-out;
+  background-size: 70%;
 }
 
 .pause {
   transform: rotate(360deg);
-  background-image: url('./public/icons/stop-icon.png');
+  background-image: url('./public/icons/play-icon.png');
+}
+
+.hide2 { 
+  overflow: hidden;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  height: 0;
+  width: 0%;
+}
+
+.ik {
+  transition-property: width, height, margin, padding, overflow, background-image, transform;
+  transition-duration: 0.5s, 0.5s, 0.5s, 0.5s, 0.5s, 0.25s, 0.75s;
+  transition-timing-function: ease-in-out;
 }

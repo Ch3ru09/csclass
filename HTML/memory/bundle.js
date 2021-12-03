@@ -1,5 +1,5 @@
 const game = document.getElementById('game')
-const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule']
+const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule', 'fox']
 
 const answers = []
 
@@ -20,6 +20,7 @@ function getAnswers() {
   let dimensions
   diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
   const ids = [...Array(dimensions).keys()];
+  shuffleArray(names)
   names.forEach((item, i) => {
     if (i < Number(dimensions/2)) {
       for (let index = 0; index < 2; index++) {
@@ -36,6 +37,16 @@ function getAnswers() {
     }
   });
 }
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Used like so
+var arr = [2, 11, 37, 42];
 
 // function detectSpeed(gameSpeed) {
 //   let dimensions
@@ -62,7 +73,6 @@ function getRows() {
     if (e.checked == true) {
       const showDiff = document.getElementById('chosenDifficulty')
       showDiff.innerHTML = `Your current difficulty: `+ e.value
-
       const chosenDiff = e.value.split('x')
       const width = Number(chosenDiff[1])
       const height = Number(chosenDiff[0])
@@ -118,34 +128,48 @@ function start(e) {
   if (!e) {
     const idk = document.getElementById('idk');
     const startButton = document.getElementById('start');
+    const pause = document.getElementById('pause');
     if (!document.getElementsByClassName('lever')[0]) {
       stop = false;
-      startButton.innerHTML = null;
+      startButton.innerHTML = '';
       startButton.classList.add('reset');
-      const pause = document.getElementById('pause');
       pause.classList.add('lever');
-      t = setInterval(() => {
-        const time = document.getElementById('time');
-        if (frozen.length == answers.length) {
-          clearInterval(t);
-          console.log(t);
-        }
-        timer += 0.1;
-        time.innerHTML = timer.toFixed(0);
-      }, 100)
+      const ik = Array.from(document.getElementsByClassName('hide2'));
+      ik.forEach(e => e.classList.remove('hide2'))
+      t = setInterval(loopClock, 100)
     } else {
-
+      pause.classList.remove('lever');
+      startButton.classList.remove('reset');
+      startButton.innerHTML = 'Start';
       reset()
-
     }
   } else {
-
-    e.classList.toggle('pause');
+    if (!document.getElementsByClassName('pause')[0]) {
+      e.classList.add('pause')
+      clearInterval(t)
+      stop = true
+    } else { 
+      e.classList.remove('pause');
+      t = setInterval(loopClock, 100)
+      stop = false
+    }
   }
+  return
+}
+
+function loopClock() {
+  const time = document.getElementById('time');
+  if (frozen.length == answers.length) {
+    clearInterval(t);
+  }
+  timer += 0.1;
+  time.innerHTML = timer.toFixed(0);
 }
 
 function reset() {
   clearInterval(t)
+  const ik = Array.from(document.getElementsByClassName('ik'));
+  ik.forEach(el => el.classList.add('hide2'));
   counter = timer = clicks = 0
   stop = true
   frozen.splice(0, frozen.length)
@@ -154,6 +178,8 @@ function reset() {
   time.innerHTML = timer.toFixed(0);
   const c = document.getElementById('clicks')
   c.innerHTML = clicks
+  const p = document.getElementsByClassName('pause')[0]
+  if (p) {p.classList.remove('pause')}
   diffReload()
 }
 
