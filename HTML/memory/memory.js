@@ -139,8 +139,11 @@ function start(e) {
 
     }
   } else {
+    if (!document.getElementsByClassName('pause')[0]) {
+      e.classList.toggle('pause');
+    } else {
 
-    e.classList.toggle('pause');
+    }
   }
 }
 
