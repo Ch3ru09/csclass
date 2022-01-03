@@ -1,0 +1,24 @@
+body {
+  text-align: center;
+  padding: 10px;
+}
+
+canvas {
+  background: #000;
+  border: 5px chartreuse solid;
+} 
+
+#nbballs {
+  width: fit-content;
+  border: 5px chartreuse solid;
+  border-radius: 10px;
+  font-size: 100%;
+  outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
+}
