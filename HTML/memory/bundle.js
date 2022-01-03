@@ -1,5 +1,16 @@
 const game = document.getElementById('game')
-const names = ['chat', 'cheval', 'chien', 'cochon', 'lapin', 'poule', 'fox']
+const names = [
+  'chat',
+  'cheval',
+  'chien',
+  'cochon',
+  'lapin',
+  'poule',
+  'fox',
+  'rhino',
+  'elephant',
+  'herisson',
+]
 
 const answers = []
 
@@ -7,7 +18,7 @@ const chooseSpeed = document.getElementById('speed');
 const diff = document.getElementsByName('diff')
 
 function addSpeedInput() {
-  const speeds = [2000, 1000, 500, 250, 0];
+  const speeds = [2000, 1500, 1000, 750, 500, 250, 0];
   speeds.forEach((e, i) => {
     chooseSpeed.innerHTML +=
       `<input type="radio" id="${e}ms" name="speed" value="${e}ms" ${i==2?'checked':''}>
@@ -45,9 +56,6 @@ function shuffleArray(array) {
   }
 }
 
-// Used like so
-var arr = [2, 11, 37, 42];
-
 // function detectSpeed(gameSpeed) {
 //   let dimensions
 //   diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});
@@ -63,9 +71,10 @@ diff.forEach(e => {
 });
 
 function diffReload() {
-  answers.splice(0, answers.length);
-  getRows();
-  getAnswers();
+  clearInterval(t)
+  const startButton = document.getElementById('start');
+  const pause = document.getElementById('pause');
+  re(pause, startButton);
 };
 
 function getRows() {
@@ -125,10 +134,10 @@ let timer = 0;
 let t
 
 function start(e) {
+  const idk = document.getElementById('idk');
+  var startButton = document.getElementById('start');
+  var pause = document.getElementById('pause');
   if (!e) {
-    const idk = document.getElementById('idk');
-    const startButton = document.getElementById('start');
-    const pause = document.getElementById('pause');
     if (!document.getElementsByClassName('lever')[0]) {
       stop = false;
       startButton.innerHTML = '';
@@ -138,18 +147,20 @@ function start(e) {
       ik.forEach(e => e.classList.remove('hide2'))
       t = setInterval(loopClock, 100)
     } else {
-      pause.classList.remove('lever');
-      startButton.classList.remove('reset');
-      startButton.innerHTML = 'Start';
-      reset()
+      re(pause, startButton);
     }
   } else {
     if (!document.getElementsByClassName('pause')[0]) {
       e.classList.add('pause')
       clearInterval(t)
       stop = true
-    } else { 
+    } else {
       e.classList.remove('pause');
+      if (frozen.length == answers.length) {
+        clearInterval(t);
+        re(pause, startButton);
+        return;
+      }
       t = setInterval(loopClock, 100)
       stop = false
     }
@@ -157,10 +168,20 @@ function start(e) {
   return
 }
 
+function re(pause, startButton) {
+  pause.classList.remove('lever');
+  startButton.classList.remove('reset');
+  startButton.innerHTML = 'Start';
+  reset();
+}
+
 function loopClock() {
   const time = document.getElementById('time');
   if (frozen.length == answers.length) {
     clearInterval(t);
+    setTimeout(() => {
+      alert(`eh, could've been faster`)
+    }, 500);
   }
   timer += 0.1;
   time.innerHTML = timer.toFixed(0);
@@ -180,7 +201,9 @@ function reset() {
   c.innerHTML = clicks
   const p = document.getElementsByClassName('pause')[0]
   if (p) {p.classList.remove('pause')}
-  diffReload()
+  answers.splice(0, answers.length);
+  getRows();
+  getAnswers();
 }
 
 function squareClick(element) {

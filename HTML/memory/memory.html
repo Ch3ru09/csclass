@@ -10,6 +10,7 @@
 
   </head>
   <body>
+    <!-- !! you can remove the whole header -->
     <header>
       <button id="diffButton" onclick="diffDrop()"><h1 class="difficulty" >Difficulty</h1></button>
       <form class="diffDrop" id="diffDrop">
@@ -23,8 +24,14 @@
           <label for="2x4">2x4</label>
           <input type="radio" id="2x5" name="diff" value="2x5">
           <label for="2x5">2x5</label>
-          <input type="radio" id="3x4" name="diff" value="3x4" checked="checked">
+          <input type="radio" id="3x4" name="diff" value="3x4">
           <label for="3x4">3x4</label>
+          <input type="radio" id="2x7" name="diff" value="2x7">
+          <label for="2x7">2x7</label>
+          <input type="radio" id="4x4" name="diff" value="4x4">
+          <label for="4x4">4x4</label>
+          <input type="radio" id="4x5" name="diff" value="4x5" checked="checked">
+          <label for="4x5">4x5</label>
         </div>
         <div id="speed">
           <div class="diffLabel">
@@ -39,6 +46,7 @@
       <h3 id="chosenDifficulty"></h3>
 
       <div id="idk" class="idk">
+        <!-- in idk, keep only the start button -->
         <div class="cl ik hide2">
           <article>clicks :</article>
           <article id="clicks">0</article>

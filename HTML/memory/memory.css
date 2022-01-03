@@ -65,8 +65,8 @@ input[type='radio'] {
 }
 
 td {
-  height: 150px;
-  width: 150px;
+  height: 100px;
+  width: 100px;
 }
 
 #game button {
@@ -80,8 +80,9 @@ td {
 
   --transTime: 250ms;
   background-image: url(./public/mark/interrogation.png);
+  background-color: #fff;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
   border-radius: 50%;
   transition:
@@ -116,7 +117,6 @@ main button:hover {
 
 .idk {
   width: 100%;
-  overflow: hidden;
   position: relative;
   justify-content: center;
 }
@@ -128,7 +128,7 @@ main button:hover {
   border-radius: 10px;
   padding: 0 10px;
   height: 40px;
-  width: 180px; 
+  width: 180px;
   display: inline-block;
   overflow: hidden;
   transition: display 1s ease;
@@ -171,7 +171,7 @@ main button:hover {
   background-image: url('./public/icons/play-icon.png');
 }
 
-.hide2 { 
+.hide2 {
   overflow: hidden;
   border: none;
   margin: 0px;
