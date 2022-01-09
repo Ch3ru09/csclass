@@ -8,6 +8,7 @@ var pX = (W - pW)/2
 const pSpeed = 7
 var rightPressed = false
 var leftPressed = false
+let play = false
 
 numballs = document.getElementById('nbballs').value
 balls = []
@@ -77,15 +78,26 @@ function keyUpHandler(e) {
   }
 }
 
+function positionPaddle() {
+  if (rightPressed == true || leftPressed == true) return
+  
+  else if (rightPressed == true) {
+    
+  } else if (leftPressed == true) {
+
+  }
+}
+
 function drawPaddle() {
   ctx.beginPath();
   ctx.rect(pX, H - pH, pW, pH);
   ctx.fillStyle = "#aaf";
   ctx.fill();
   ctx.closePath();
-} drawPaddle()
+} 
 
 function animate() {
+  positionPaddle()
   drawPaddle();
 	requestAnimationFrame(animate);
 }
