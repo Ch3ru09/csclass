@@ -1,127 +1,91 @@
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
-const paddleHeight = 10;
-const paddleWidth = 0;
-let paddleX = (canvas.width - paddleWidth) / 2;
-let rightPressed = false;
-let leftPressed = false;
-const paddlespeed = 10;
-const balls = [];
-getballs()
+var game = document.getElementById('game');
+var ctx = game.getContext("2d");
+const W = game.width;
+const H = game.height;
+const pW = 100
+const pH = 15
+var pX = (W - pW)/2
+const pSpeed = 7
+var rightPressed = false
+var leftPressed = false
 
-var interval = setInterval(draw, 10);
+numballs = document.getElementById('nbballs').value
+balls = []
 
-
-function getballs() {
-  balls.splice(0, balls.length)
-  for (let i = 0; i < document.getElementById('nbballs').value; i++) {
-    balls.push({
-      ballRadius: ranint(15, 25),
-      x: ranint(20, canvas.width-20),
-      y: canvas.height - 200,
-      dx: ranReal(-5, 5),
-      dy: ranReal(-5, -1),
-      color: `hsl(${ranint(0, 360)}, ${ranint(50, 100)}%, ${ranint(40, 60)}%)`,
-    });
-  };
+for(let i = 0; i < numballs; i++) {
+  balls.push(new Ball())
 }
 
-function reset() {
-  getballs()
-  clearInterval(interval)
-  interval = setInterval(draw, 10)
+function ranint(min, max) {
+  return min + Math.floor(Math.random()*(max-min+1))
 }
 
-function ranint(max, min) {
-  return min + Math.floor(Math.random() * (max - min + 1));
-};
-
-function ranReal(max, min) {
-  return min + (Math.random() * (max - min + 1));
+function Ball() {
+  this.r = ranint(6, 12);
+	this.x = ranint(r, W-r);
+	this.y = ranint(r, -H+r);
+	this.dx = 5;
+	this.dy = 5;
+	this.color = 'hsl('+(Math.random()*360)+',90%,50%)';
+	
+	this.draw = () => {
+		ctx.fillStyle = this.color;
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0,2*Math.PI);
+		ctx.fill();
+	} 
+	
+	this.update = () => {
+		this.x += this.dy;
+		this.y += this.dy;
+		if (this.x > W - this.r) {
+			this.x = W - this.r;
+			this.dx *= -1;
+		} else if (this.x < this.r) {
+			this.x = this.r;
+			this.dx *= -1;
+		}
+		if (this.y > H - this.r) {
+			this.y = H - this.r;
+			this.dy *= -1;
+		} else if (this.y < this.r) {
+			this.y = this.r + 1;
+			this.dy *= -1;
+		}
+		this.draw();
+	}
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 function keyDownHandler(e) {
-  if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
+  if (e.key == "Right" || e.key == "ArrowRight" || e.key == 'd') {
     rightPressed = true;
   }
-  else if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
+  else if (e.key == "Left" || e.key == "ArrowLeft" || e.key == 'a') {
     leftPressed = true;
-  }
-  else if (e.key == 'r') {
-    reset()
   }
 }
 
 function keyUpHandler(e) {
-  if (e.key == "Right" || e.key == "ArrowRight" || e.key == "d") {
+  if (e.key == "Right" || e.key == "ArrowRight" || e.key == 'd') {
     rightPressed = false;
   }
-  else if (e.key == "Left" || e.key == "ArrowLeft" || e.key == "a") {
+  else if (e.key == "Left" || e.key == "ArrowLeft" || e.key == 'a') {
     leftPressed = false;
   }
 }
 
-function drawBall(ball) {
-  ctx.beginPath();
-  ctx.arc(ball.x, ball.y, ball.ballRadius, 0, Math.PI * 2);
-  ctx.fillStyle = ball.color;
-  ctx.fill();
-  ctx.closePath();
-}
-
 function drawPaddle() {
   ctx.beginPath();
-  ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
-  ctx.fillStyle = "#fff";
+  ctx.rect(pX, H - pH, pW, pH);
+  ctx.fillStyle = "#aaf";
   ctx.fill();
   ctx.closePath();
-}
+} drawPaddle()
 
-function detectCollisions(ball, ind) {
-
-}
-
-
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  balls.forEach((ball, i) => {
-    drawBall(ball);
-    const collisions = detectCollisions(ball, i)
-    if (ball.x + ball.dx > canvas.width - ball.ballRadius || ball.x + ball.dx < ball.ballRadius) {
-      ball.dx = -ball.dx;
-    }
-    if (ball.y + ball.dy < ball.ballRadius) {
-      ball.dy = -ball.dy;
-    }
-    else if (ball.y + ball.dy > canvas.height - ball.ballRadius) {
-      if (ball.x > paddleX && ball.x < paddleX + paddleWidth) {
-        if (ball.y = ball.y - paddleHeight) {
-          ball.dy = -ball.dy;
-        }
-        }
-        else {
-          balls.splice(i, 1)
-        }
-    }  
-    if (balls.length <= 3) {
-      setTimeout(() => {
-        clearInterval(interval);
-      }, 10); 
-    };
-    ball.x += ball.dx;
-    ball.y += ball.dy;
-  });
+function animate() {
   drawPaddle();
-
-  if (rightPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += paddlespeed;
-  }
-  else if (leftPressed && paddleX > 0) {
-    paddleX -= paddlespeed;
-  }
+	requestAnimationFrame(animate);
 }
-
-
