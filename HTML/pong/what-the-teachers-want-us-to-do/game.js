@@ -139,21 +139,25 @@ function reset() {
   }
 }
 
+function detectCollision(b1, b2) {
+  
+}
+
 function animate() {
   ctx.clearRect(0, 0, W, H);
   paddle.updatePaddle()
   
   balls.forEach(ball => {
     ball.update()
-    // balls.forEach(ball2 => {
-    //   detectCollision(ball, ball2)
-    //     .then(res => {
-    //       if (res[0]) {
-    //         ajustPos(ball, ball2, res[1])
-    //         resolve(ball, ball2)
-    //       }
-    //     })
-    // })
+    balls.forEach(ball2 => {
+      detectCollision(ball, ball2)
+        .then(res => {
+          if (res[0]) {
+            ajustPos(ball, ball2, res[1])
+            resolve(ball, ball2)
+          }
+        })
+    })
   })
 
 	requestAnimationFrame(animate);
