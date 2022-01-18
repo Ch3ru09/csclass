@@ -5,7 +5,7 @@ const H = game.height;
 var rightPressed = false
 var leftPressed = false
 var shiftPressed = false
-let play = false
+let play = true
 
 paddle = new Paddle()
 
@@ -13,9 +13,7 @@ paddle = new Paddle()
 numballs = document.getElementById('nbballs').value
 balls = []
 
-for(let i = 0; i < numballs; i++) {
-  balls.push(new Ball())
-}
+
 
 function ranint(min, max) {
   return min + Math.floor(Math.random()*(max-min+1))
@@ -25,40 +23,47 @@ function ranreal(min, max) {
   return min + (Math.random()*(max -min+1))
 }
 
-function Ball() {
-  this.r = ranint(6, 12);
-	this.x = ranint(this.r, W-this.r);
-	this.y = ranint(this.r, (H-this.r)/2);
-	this.dx = ranreal(-5, -1);
-	this.dy = ranreal(-5, 5);
-	this.color = 'hsl('+(Math.random()*360)+',90%,50%)';
-	
-	this.draw = () => {
-		ctx.fillStyle = this.color;
-		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.r, 0,2*Math.PI);
-		ctx.fill();
-	} 
-	
-	this.update = () => {
-		this.x += this.dx;
-		this.y += this.dy;
-		if (this.x > W - this.r) {
-			this.x = W - this.r;
-			this.dx *= -1;
-		} else if (this.x < this.r) {
-			this.x = this.r;
-			this.dx *= -1;
-		}
-		if (this.y > H - this.r) {
-			this.y = H - this.r;
-			this.dy *= -1;
-		} else if (this.y < this.r) {
-			this.y = this.r + 1;
-			this.dy *= -1;
-		}
-		this.draw();
-	}
+class Ball {
+  constructor() {
+    this.r = ranint(10, 15);
+    this.x = ranint(this.r, W-this.r);
+    this.y = ranint(this.r, (H-this.r)/2);
+    this.dx = ranreal(-5, -1);
+    this.dy = ranreal(1, 5) * (ranint(0, 1)*2 - 1);
+    this.color = 'hsl('+(Math.random()*360)+',90%,50%)';
+  }
+  
+  
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0,2*Math.PI);
+    ctx.fill();
+  }
+  
+  update(b) {
+    this.x += this.dx;
+    this.y += this.dy;
+    if (this.x > W - this.r) {
+      this.x = W - this.r;
+      this.dx *= -1.2;
+    } else if (this.x < this.r) {
+      this.x = this.r;
+      this.dx *= -1.2;
+    }
+    if (this.y > H - this.r) {
+      balls.splice(b, 1, undefined)
+    } else if (this.y < this.r) {
+      this.y = this.r + 1;
+      this.dy *= -1.2;
+    }
+
+    this.draw();
+  }
+}
+
+for(let i = 0; i < numballs; i++) {
+  balls.push(new Ball())
 }
 
 document.addEventListener("keydown", keyDownHandler, false);
@@ -87,7 +92,7 @@ function keyUpHandler(e) {
 }
 
 function Paddle() {
-  this.pW = 150
+  this.pW = 200
   this.pH = 15
   this.pX = (W - this.pW)/2
   this.pSpeed = 20
@@ -95,7 +100,7 @@ function Paddle() {
   this.drawPaddle = () => {
     ctx.beginPath();
     ctx.rect(this.pX, H - this.pH, this.pW, this.pH);
-    ctx.fillStyle = "#aaf";
+    ctx.fillStyle = "#15ffaa";
     ctx.fill();
     ctx.closePath();
   }
@@ -126,20 +131,69 @@ function Paddle() {
 function reset() {
   balls = []
   numballs = document.getElementById('nbballs').value
-  const pW = 150
-  const pH = 15
-  var pX = (W - pW)/2
-  let pSpeed = 20
-  var rightPressed = false
-  var leftPressed = false
-  var shiftPressed = false
-  let play = false
+  paddle.pX = (W - paddle.pW)/2
+  pSpeed = 20
+  rightPressed = false
+  leftPressed = false
+  shiftPressed = false
+  play = true
   for(let i = 0; i < numballs; i++) {
     balls.push(new Ball())
   }
+  animate()
 }
 
 function detectCollision(b1, b2) {
+  const rsum = b1.r + b2.r ;
+  const dx = b2.x - b1.x ;
+  const dy = b2.y - b1.y ;
+  return [rsum*rsum > dx*dx + dy*dy, rsum - Math.sqrt(dx*dx+dy*dy)]
+}
+
+function ajustPos(b1, b2, dist) {
+  const percent = 1;
+  const slop = 0.01;
+  var correction = (Math.max(dist - slop, 0) / (1/b1.r + 1/b2.r)) * percent;
+  
+  var norm = [b2.x - b1.x, b2.y - b1.y];
+  var mag = Math.sqrt(norm[0]*norm[0] + norm[1]*norm[1]);
+  norm = [norm[0]/mag,norm[1]/mag];
+  correction = [correction*norm[0],correction*norm[1]];
+  b1.x -= 1/b1.r * correction[0];
+  b1.y -= 1/b1.r * correction[1];
+  b2.x += 1/b2.r * correction[0];
+  b2.y += 1/b2.r * correction[1];
+}
+
+function resolveColl(b1, b2) {
+  var relVel = [b2.dx - b1.dx,b2.dy - b1.dy];
+  var norm = [b2.x - b1.x, b2.y - b1.y];
+  var mag = Math.sqrt(norm[0]*norm[0] + norm[1]*norm[1]);
+  norm = [norm[0]/mag,norm[1]/mag];
+  
+  var velAlongNorm = relVel[0]*norm[0] + relVel[1]*norm[1];
+  if(velAlongNorm > 0)
+    return;
+  
+  var bounce = 0.5;
+  var j = -(1 + bounce) * velAlongNorm;
+  j /= 1/b1.r + 1/b2.r;
+  
+  var impulse = [j*norm[0],j*norm[1]];
+  b1.dx -= 1/b1.r * impulse[0];
+  b1.dy -= 1/b1.r * impulse[1];
+  b2.dx += 1/b2.r * impulse[0];
+  b2.dy += 1/b2.r * impulse[1];
+}
+
+function handlePaddleCollision(b) {
+  if (b.y+b.dy+b.r < H-paddle.pH) return
+  if (b.x+b.dx+b.r < paddle.pX) return
+  if (b.x+b.dx+b.r > paddle.pX+paddle.pW) return
+  // if (b.y+b.dy < H-paddle.pH && b.x+b.dx < paddle.pX && b.x+b.dx > paddle.x+paddle.pW) return
+
+  b.y = H-paddle.pH-b.r
+  b.dy *= -1
   
 }
 
@@ -147,18 +201,30 @@ function animate() {
   ctx.clearRect(0, 0, W, H);
   paddle.updatePaddle()
   
-  balls.forEach(ball => {
-    ball.update()
-    balls.forEach(ball2 => {
-      detectCollision(ball, ball2)
-        .then(res => {
-          if (res[0]) {
-            ajustPos(ball, ball2, res[1])
-            resolve(ball, ball2)
+  balls.forEach((ball, b) => {
+    if (ball != undefined) {
+      ball.update(b)
+      if (balls[b] != undefined) {
+        balls.forEach(ball2 => {
+          if (ball2 != undefined && ball != ball2) {
+            var res = detectCollision(ball, ball2)
+            if (res[0]) {
+              ajustPos(ball, ball2, res[1])
+              resolveColl(ball, ball2)
+            }
           }
         })
-    })
+      }
+      handlePaddleCollision(ball)
+    }
   })
-
-	requestAnimationFrame(animate);
+  balls.forEach((b, i) => {
+    if (b == undefined) balls.splice(i, 1)
+  })
+  if (balls.length > 3 && play == true) {
+    requestAnimationFrame(animate);
+  } else if (play == true) {
+    requestAnimationFrame(animate)
+    play = false
+  }
 } animate()

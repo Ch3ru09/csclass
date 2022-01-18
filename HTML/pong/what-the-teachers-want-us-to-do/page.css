@@ -1,16 +1,18 @@
 body {
   text-align: center;
   padding: 10px;
+  background-color: #ddd;
 }
 
 canvas {
-  background: #000;
+  background: #222;
   border: 5px chartreuse solid;
+  margin-top: 10px;
 } 
 
 #nbballs {
   width: fit-content;
-  border: 5px chartreuse solid;
+  border: 5px #aae solid;
   border-radius: 10px;
   font-size: 100%;
   outline: none;
