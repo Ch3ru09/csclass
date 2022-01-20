@@ -5,13 +5,14 @@ body {
   text-align: center;
   color: whitesmoke;
   font-size: 200%;
+  font-family: 'Quicksand';
 }
 
 canvas {
   background-color: #222;
   border: 5px rgb(105, 210, 0) solid;
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
 }

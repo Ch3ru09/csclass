@@ -1,7 +1,7 @@
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d')
-const H = canvas.height;
-const W = canvas.width;
+var H = canvas.height = innerHeight*0.75;
+var W = canvas.width = innerWidth*0.8;
 play = false;
 
 
@@ -14,30 +14,34 @@ function drawMiddle() {
   ctx.lineWidth = '10';
   ctx.setLineDash([lineWidth, lineSpace]);
   ctx.strokeStyle = '#aaa'
-  ctx.moveTo((W-lineWidth)/2, 7.5);
-  ctx.lineTo((W-lineWidth)/2, H-7.5);
+  ctx.moveTo((W-lineWidth)/2, 10);
+  ctx.lineTo((W-lineWidth)/2, H-10);
   ctx.stroke();
 }
 
 var paddles, mainBall, balls, timer, points;
 var pauseCooldown = false;
-var text = 'Game Paused'
+var text = 'Game Paused';
 
-function Paddle(i) {
-  this.pW = 25;
-  this.pH = 200;
-  this.pSpeed = 20;
-  this.downPressed = false;
-  this.upPressed = false;
-  this.fPressed = false;
-  this.backPressed = false;
-  this.slowPressed = false;
-  this.cooldown = 0;
+class Paddle {
+  constructor(i) {
+    this.pW = 25;
+    this.pH = 200;
+    this.pSpeed = 20;
+    this.downPressed = false;
+    this.upPressed = false;
+    this.fPressed = false;
+    this.backPressed = false;
+    this.slowPressed = false;
+    this.cooldown = 0;
+    this.cooldownCooldown = 0;
+    this.smashing = false;
 
-  this.y = (H-this.pH)/2;
-  i == 0 ? this.x = 5: this.x = W-this.pW-5;
-
-  this.draw = () => {
+    this.y = (H-this.pH)/2;
+    i == 0 ? this.x = 5: this.x = W-this.pW-5;
+  }
+  
+  draw() {
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.pW, this.pH);
     ctx.fillStyle = "#eaa";
@@ -45,7 +49,27 @@ function Paddle(i) {
     ctx.closePath();
   }
   
-  this.update = () => {
+  update(i) {
+    i == 1 && this.x != W-this.pW-5
+      ? this.x = W-this.pW-5 : 0;
+
+    if (this.cooldown < 10 && this.fPressed == true) {
+      this.smash = true
+      this.cooldown++;
+    } else if (this.cooldown > 0 && this.cooldown < 10) {
+      this.smash = true
+      this.cooldown++;
+    } else if (this.cooldown == 10) {
+      this.smash = false
+      if (this.cooldownCooldown != 0) {
+        this.cooldownCooldown--;
+      } else {
+        this.cooldown = 0;
+        this.cooldownCooldown = 12;
+      }
+    }
+
+    
     if (this.upPressed && this.downPressed) {}
     else {
       this.slowPressed == false
@@ -68,19 +92,27 @@ function Paddle(i) {
     
     this.draw();
   }
+
+  block() {
+
+  }
 }
 
-function Ball() {
-  this.x = W/2 + 10;
-  this.y = H/2;
-  this.r = 20;
-  this.dx = 5;
-  this.dy = 5 * ((ranint(0, 1)*2)-1);
+class Ball {
+  constructor() {
+    this.x = W/2 + 10;
+    this.y = H/2;
+    this.r = 20;
+    this.dx = 5;
+    this.dy = 5 * ((ranint(0, 1)*2)-1);
+    this.smash = false;
 
-  this.death = new Sound('sounds/deathExplosion.wav')
-  this.bounce = new Sound('sounds/wallBounce.wav')
+    this.death = new Sound('sounds/deathExplosion.wav')
+    this.bounce = new Sound('sounds/wallBounce.wav')
+  }
+  
 
-  this.draw = () => {
+  draw() {
     ctx.beginPath();
     ctx.rect(this.x, this.y, this.r, this.r);
     ctx.fillStyle = '#eee';
@@ -88,7 +120,7 @@ function Ball() {
     ctx.closePath();
   }
 
-  this.update = () => {
+  update() {
     this.x += this.dx;
     this.y += this.dy;
     if (this.x > W) {
@@ -111,7 +143,6 @@ function Ball() {
       this.dy *= -1;
       this.bounce.play();
     }
-
     this.draw();
   }
 }
@@ -131,14 +162,26 @@ function Sound(src) {
   }
 }
 
+function showPoints(txt, i) {
+  ctx.beginPath();
+  ctx.font = "100px Quicksand";
+  a = ctx.measureText(txt).width/2;
+  i == 0 ? x = W/2 - 50 - a
+         : x = W/2 + 50 + a;
+  ctx.fillStyle = '#eee';
+  ctx.textAlign = 'center';
+  ctx.fillText(txt, x, 95)
+  ctx.closePath();
+}
+
 function ranint(min, max) {
   return min + Math.floor(Math.random()*(max-min+1))
 }
 
 function positionCheck(b, p) {
-  if (b.x+b.dx<p.pW+5) {
+  if (b.x<p.pW+5) {
     handleCollision(b, paddles[0])
-  } else if (b.x+b.dx+b.r>W-p.pW-5) {
+  } else if (b.x+b.r>W-p.pW-5) {
     handleCollision(b, paddles[1])
   }
 }
@@ -155,19 +198,36 @@ function handleCollision(b, p) {
 }
 
 function bounce(b, p) {
+  if (p.smashing == true && b.smash == true) {
+    s = 25
+  } else if (p.smashing == true) {
+    s = 20
+  } else if (p.block == true) {
+    s = 5
+  } else {
+    s = 5
+  }
+  // p.smash == true == b.smash 
+  //   ? s = 25
+  //   : p.smash == true
+  //     ? s= 20
+  //     : p.backPressed == true
+  //       ? s = 5
+  //       : s = 5
+  console.log(s)
   if (b.y+(b.r/2) == p.y+(p.pH/2)) {
-    b.dy = 0;
-    b.dx = -(b.dx/Math.abs(b.dx)) * 5;
+    b.dx *= -(s/5)
+    b.dy = 0
   } else if (b.y+(b.r/2) < p.y+(p.pH/2)) {
-    let a = Math.max(b.y-p.y, 0.01);
-    let c = Math.max(p.pH/2, 0.01);
-    b.dy = Math.abs(b.dy) * -1
-    b.dx *= -1
+    a = ((p.y+p.pH/2)-(b.y+b.r/2))/(p.pH/2-b.r/2)
+    b.dy = -(s * a)
+    b.dx = (b.dx/Math.abs(b.dx)) * -s * (a**-1)
+    Math.abs(b.dx) > (s*2) ? b.dx = (b.dx/Math.abs(b.dx))* (s*2): b.dx;
   } else if (b.y+(b.r/2) > p.y+(p.pH/2)) {
-    let a = Math.max(b.y-(p.pH+p.y, 0.01));
-    let c = Math.max(p.pH/2, 0.01);
-    b.dy = Math.abs(b.dy)
-    b.dx *= -1
+    a = ((b.y+b.r/2)-(p.y+p.pH/2))/(p.pH-p.pH/2) 
+    b.dy = (s * a)
+    b.dx = (b.dx/Math.abs(b.dx)) * -s * (a**-1)
+    Math.abs(b.dx) > (s*2) ? b.dx = (b.dx/Math.abs(b.dx))* (s*2): b.dx;
   }
 }
 
@@ -264,6 +324,9 @@ function pausedGraphics() {
       p.draw();
     })
     drawMiddle();
+    points.forEach((p, i) => {
+      showPoints(String(p), i);
+    });
     mainBall.draw()
     soundDown.play()
   }
@@ -281,6 +344,8 @@ function reset() {
   mainBall = new Ball();
   balls = [];
   points = [0, 0]
+  pauseCooldown = false;
+  text = 'Game Paused';
   for (let i = 0; i < 2; i++) {
     paddles.push(new Paddle(i))
   }
@@ -292,14 +357,16 @@ function reset() {
 
 function animate() {
   if (play == true) {
+    H = canvas.height = innerHeight*0.75;
+    W = canvas.width = innerWidth*0.8;
     ctx.clearRect(0, 0 , W, H);
-    paddles.forEach(p => {
-      p.update();
-    })
-    points.forEach(p => {
-
+    paddles.forEach((p, i) => {
+      p.update(i);
     })
     drawMiddle();
+    points.forEach((p, i) => {
+      showPoints(String(p), i);
+    })
 
     positionCheck(mainBall, paddles[0]);
     mainBall.update();
