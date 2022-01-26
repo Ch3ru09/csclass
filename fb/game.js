@@ -3,12 +3,15 @@ const ctx = canvas.getContext('2d');
 var H = canvas.height = innerHeight-10;
 var W = canvas.width = innerWidth-10;
 
-const play = true;
+const play = false;
 
 const bird = new Bird();
+
 const background = new Image();
 var background_x = 0;
 var speed = 1;
+
+const walls = []
 
 function movebgr() {
   background.src = './background.png';
@@ -42,10 +45,16 @@ function keyUpHandler(e) {
 function animate() {
   H = canvas.height = innerHeight-10;
   W = canvas.width = innerWidth-10;
-  movebgr();
+  
 
-  bird.update();
   if (play == true) {
+    ctx.clearRect(0, 0, W, H);
+
+    movebgr();
+    
+    bird.update();
     requestAnimationFrame(animate)
   }
-} animate()
+} 
+
+animate()
