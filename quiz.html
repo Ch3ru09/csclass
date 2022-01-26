@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Quiz Ilyass</title>
+</head>
+
+
+<body>
+  <script>
+    //  var score = 0;
+    //  var total = 6;
+      
+      function submitAnswers() {
+          
+        //  alert("You got " + score + " out of " + total)
+          
+          var score = 0;
+          var total = 6;
+          
+        //  alert("You got " + score + " out of " + total)
+          
+          var age = document.getElementById('ageSecondChoice')
+          var year = document.getElementById('yearThirdChoice')
+          var month = document.getElementById('monthFirstChoice')
+          var day = document.getElementById('dayThirdChoice')
+          var name = document.getElementById('nameFirstChoice')
+          var passion = document.getElementById('passionFirstChoice')
+          
+          var goodAnswers = [
+              age,
+              year,
+              month,
+              day,
+              name,
+              passion
+          ]
+          
+          goodAnswers.forEach(a => {
+              if (a.checked) {
+                  score++
+              }
+          })
+          if (score == total) {
+            alert(`👏👏 You got ${score} out of ${total} 👏👏 `) 
+          } else {
+            alert(`Bruh, you're shit. You got ${score} out of ${total}`)
+          }
+          
+        //  var age = document.getElementById('ageSecondChoice')
+        //  var year = document.getElementById('yearthirdChoice')
+        //  var month = document.getElementById('monthFirstChoice')
+        //  var day = document.getElementById('dayThirdChoice')
+        //  var name = document.getElementById('nameFirstChoice')
+        //  var passion = document.getElementById('passionFirstChoice')
+          
+        //  if (age.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+        //  if (year.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+        //  if (month.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+        //  if (day.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+        //  if (name.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+        //  if (passion.checked == 1) {
+        //      alert("breh")
+        //      score++
+        //  } else {
+        //      alert("bruh")
+        //  }
+      }
+  </script>
+  
+  
+  <h1>Quiz Ilyass</h1>
+
+  <form>
+      
+<!--        <input type="submit" onsubmit="submitAnswers()" value="Get Results">-->
+          <button type="button" onClick="submitAnswers()">Get Results</button>
+
+    <h3>Age?</h3>
+    <input type="radio" id="ageFirstChoice" name="age">
+    <label for="firstChoice">69</label>
+    <br>
+    <input type="radio" id="ageSecondChoice" name="age">
+    <label for="secondChoice">15</label>
+    <br>
+    <input type="radio" id="ageThirdChoice" name="age">
+    <label for="thirdChoice">420</label>
+    <br>
+    <br>
+  <!-- </form>  -->
+
+  <br>
+
+  <h3>Year of birth?</h3>
+  <!-- <form> -->
+    <input type="radio" id="yearFirstChoice" name="year_of_birth">
+    <label for="firstChoice">2002</label>
+    <br>
+    <input type="radio" id="yearSecondChoice" name="year_of_birth">
+    <label for="secondChoice">2007</label>
+    <br>
+    <input type="radio" id="yearThirdChoice" name="year_of_birth">
+    <label for="thirdChoice">2006</label>
+    <br>
+    <br>
+  <!-- </form>  -->
+
+  <br>
+
+  <h3>Month of birth?</h3>
+  <!-- <form> -->
+    <input type="radio" id="monthFirstChoice" name="month_of_birth">
+    <label for="firstChoice">March</label>
+    <br>
+    <input type="radio" id="monthSecondChoice" name="month_of_birth">
+    <label for="secondChoice">August</label>
+    <br>
+    <input type="radio" id="monthThirdChoice" name="month_of_birth">
+    <label for="thirdChoice">November</label>
+    <br>
+    <br>
+  <!-- </form>  -->
+
+  <br>
+
+  <h3>Day of birth?</h3>
+  <!-- <form> -->
+    <input type="radio" id="dayFirstChoice" name="day_of_birth">
+    <label for="firstChoice">31</label>
+    <br>
+    <input type="radio" id="daySecondChoice" name="day_of_birth">
+    <label for="secondChoice">17</label>
+    <br>
+    <input type="radio" id="dayThirdChoice" name="day_of_birth">
+    <label for="thirdChoice">6</label>
+    <br>
+    <br>
+  <!-- </form>  -->
+
+  <br>
+
+  <h3>Full name?</h3>
+  <!-- <form> -->
+    <input type="radio" id="nameFirstChoice" name="full_name">
+    <label for="firstChoice">Ilyass Chafik</label>
+    <br>
+    <input type="radio" id="nameSecondChoice" name="full_name">
+    <label for="secondChoice">Augustin Desprairies</label>
+    <br>
+    <input type="radio" id="nameThirdChoice" name="full_name">
+    <label for="thirdChoice">Ilyass Germain</label>
+    <br>
+    <br>
+  <!-- </form>  -->
+
+  <br>
+
+  <h3>Passion?</h3>
+  <!-- <form> -->
+    <input type="radio" id="passionFirstChoice" name="passion">
+    <label for="firstChoice">Programming</label>
+    <br>
+    <input type="radio" id="passionSecondChoice" name="passion">
+    <label for="secondChoice">Smashing</label>
+    <br>
+    <input type="radio" id="passionThirdChoice" name="passion">
+    <label for="thirdChoice">Super Smash Bros Ultimate smash</label>
+    <br>
+    <br>
+
+    <h3>Favorite Color?</h3>
+    <label for="favoriteColor">Select a Color</label>
+    <br>
+    <input type="color" id="favoriteColor">
+
+    <h3>Favorite Class?</h3>
+    <label for="favoriteClass">What might my favorite class be?</label>
+    <br>
+    <input type="text" id="favoriteClass">
+  </form> 
+
+  </body>
+</html>
