@@ -1,31 +1,45 @@
+var walls = []
 class Wall {
   constructor() {
-    this.x = W+1
-    this.y = ranint(10, H-10)
     this.H = 200;
-    this.W = 50;
+    this.W = 100;
+
+    this.x = W+1;
+    this.y = ranint(10, H-10-63-this.H);
+    this.passed = false;
+    this.checked = false;
   }
 
   draw() {
     ctx.beginPath();
     ctx.fillStyle = '#000';
     ctx.fillRect(this.x, 0, this.W, this.y);
-    ctx.fillRect(this.x, this.y+this.H, this.W, H-this.y+this.H)
+    ctx.fillRect(this.x, this.y+this.H, this.W, H-this.y-this.H-63)
+    ctx.closePath();
   }
 
-  update() {
-    this.x -= this.speed
-    this.draw();
+  update(i) {
+    this.x -= (speed+score+1)
+    if (this.x < -this.W) {
+      walls.splice(i, 1)
+    } else {
+      this.draw();
+    }
   }
 }
 
-var cooldown = 
 
 function createWalls() {
-  cooldown -= 1
-  if (cooldown == 0) {
-    walls.push(new Wall)
+  if (!walls[0]) walls.push(new Wall())
+  if (walls[0].x < W-500 && walls[0].checked == false || walls.length == 0) {
+    walls[0].checked = true;
+    walls.splice(0, 0, new Wall());
   }
+  walls.forEach((w, i) => {
+    w.update(i);
+    collision(w, bird)
+  })
+  walls = walls.filter(x => x != undefined);
 }
 
 function ranint(min, max) {

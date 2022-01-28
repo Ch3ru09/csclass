@@ -5,11 +5,12 @@ class Bird {
     this.r = W/H * 15;
     this.jump = false;
     this.cool = false;
-    this.grav = -1;
-    this.up = 60;
-
+    this.grav = -3;
+    this.up = H/15;
+    this.jumping = false;
+    
     this.accel = 11/10;
-    this.maxSpeed = -4;
+    this.maxSpeed = -H/60;
   }
 
   draw() {
@@ -22,17 +23,29 @@ class Bird {
 
   update() {
     this.x = W/4
-    if(this.jump == true) {
-      if (this.y-this.up-this.r < 0) {
-        this.y = this.r
-      } else {
-        this.y -= this.up;
-      }
-      this.jump = false;
-      this.grav = -1
-    } else {
-      this.grav *= this.accel;
-      this.y -= Math.max(this.grav, this.maxSpeed);
+    
+    if (this.jumping == 2) {
+      this.jumping = 0;
+    } else if (this.cool == true && this.jump == true || this.jumping > 0) {
+      this.y -= this.up * (++this.jumping/6)
+      this.cool = true;
+    }
+
+    // if(this.jump == true) {
+    //   if (this.y-this.up-this.r < 0) {
+    //     this.y = this.r
+    //   } else {
+    //     this.y -= this.up;
+    //   }
+    //   this.jump = false;
+    //   this.grav = -3
+    // } else {
+    //   this.grav *= this.accel;
+    //   this.y -= Math.max(this.grav, this.maxSpeed)
+    // }
+    
+    if (this.y > H-this.r-61) {
+      this.y = H-this.r-61;
     }
     this.draw();
   }
