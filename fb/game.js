@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 var H = canvas.height = innerHeight;
 var W = canvas.width = innerWidth;
 
-var play = false;
+var play = true;
 var score = 0;
 
 var bird = new Bird();
@@ -28,18 +28,22 @@ document.addEventListener('keydown', keyDownHandler, false)
 document.addEventListener('keyup', keyUpHandler, false)
 
 function keyDownHandler(e) {
-  if (e.key == ' ' || e.key == 'upArrow' && bird.cool == false) {
+  if (bird.cool == false && e.key == ' ' || e.key == 'ArrowUp') {
     bird.jump = true;
     bird.cool = true;
+  } else if (e.key == 'Shift') {
+    bird.superjump = true;
   } else if (e.key == 'r') {
     reset();
   }
 }
 
 function keyUpHandler(e) {
-  if (e.key == ' ') {  
-    bird.jump = false
-    bird.cool = false
+  if (e.key == ' ' || e.key == 'ArrowUp') {  
+    bird.jump = false;
+    bird.cool = false;
+  } else if (e.key == 'Shift') {
+    bird.superjump = false;
   } 
 }
 
