@@ -5,16 +5,16 @@ class Wall {
     this.W = 100;
 
     this.x = W+1;
-    this.y = ranint(10, H-10-63-this.H);
+    this.y = ranint(10, H-10-71-this.H);
     this.passed = false;
     this.checked = false;
   }
 
   draw() {
     ctx.beginPath();
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.6)';
     ctx.fillRect(this.x, 0, this.W, this.y);
-    ctx.fillRect(this.x, this.y+this.H, this.W, H-this.y-this.H-63)
+    ctx.fillRect(this.x, this.y+this.H, this.W, H-this.y-this.H-71)
     ctx.closePath();
   }
 
@@ -31,7 +31,7 @@ class Wall {
 
 function createWalls() {
   if (!walls[0]) walls.push(new Wall())
-  if (walls[0].x < W-500 && walls[0].checked == false || walls.length == 0) {
+  if (walls[0].x < W-750 && walls[0].checked == false || walls.length == 0) {
     walls[0].checked = true;
     walls.splice(0, 0, new Wall());
   }

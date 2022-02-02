@@ -4,6 +4,7 @@ var H = canvas.height = innerHeight;
 var W = canvas.width = innerWidth;
 
 var play = true;
+let pause = false;
 var score = 0;
 
 var bird = new Bird();
@@ -12,15 +13,20 @@ var background = new Image();
 var background_x = 0;
 var speed = 3;
 
+var hitboxes = true;
+
+let dc = 1;
+
 function movebgr() {
-  background.src = './background.png';
+  background.src = './assets/background.png';
   background_x -= speed;
 
   if (background_x < -(background.width - W)) {
     background_x = 0
   } 
   ctx.beginPath();
-  ctx.drawImage(background, background_x, 0, background.width, innerHeight);
+  temp = Math.max(innerHeight/700, 11/10)
+  ctx.drawImage(background, background_x, H-background.height/temp, background.width/temp, background.height/temp);
   ctx.closePath();
 }
 
@@ -56,7 +62,18 @@ function collision(wall, b) {
   }
 
   if (detectifdeath(wall, b) == 'ded') {
-    reset()
+    // ctx.clearRect(0, 0, W, H)
+    // movebgr()
+    // bird.update()
+    // walls.forEach(w => {
+    //   w.draw()
+    // })
+    if (dc == 0) {
+      play = false;
+      return
+    } else {
+      dc--
+    }
   }
 }
 
@@ -94,6 +111,7 @@ function reset() {
   speed = 3;
   walls = [];
   score = 0;
+  dc = 0;
   if (play == false) {
     play = true;
     animate()
@@ -105,14 +123,16 @@ function animate() {
   W = canvas.width = innerWidth;
   
   
-  if (play == true) {
+  if (pause == false) {
     ctx.clearRect(0, 0, W, H);
     movebgr();
 
-    bird.update();
     createWalls();
+    bird.update();
     showscore();
-    requestAnimationFrame(animate)
+    if (play == true) {
+      requestAnimationFrame(animate)
+    } 
   }
 } 
 
