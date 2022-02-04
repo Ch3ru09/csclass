@@ -58,17 +58,16 @@ class Bird {
 
     if (this.y-this.r < 0) {
       this.y = this.r;
-    } else if (this.y+this.r > H) {
-      this.y = H - this.r;
+    } else if (this.y > H-this.r-71) {
+      this.y = H-this.r-71;
       // -------------------
       // *** Should be Death
+      // ? ded()
       // -------------------
+      
+      
     }
     this.x = W/4;
-    
-    if (this.y > H-this.r-61) {
-      this.y = H-this.r-61;
-    }
     this.draw();
   }
 }

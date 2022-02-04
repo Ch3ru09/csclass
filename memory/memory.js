@@ -62,7 +62,7 @@ function shuffleArray(array) {
       [array[i], array[j]] = [array[j], array[i]];
   }
 }
-// !! DECAPITADED;
+// !! DEPRICATED;
 // function detectSpeed(gameSpeed) {
 //   let dimensions
 //   diff.forEach(e => {if (e.checked) {const d = e.value.split('x'); dimensions = d.reduce((a, b) => a*b)}});

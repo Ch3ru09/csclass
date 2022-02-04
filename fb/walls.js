@@ -8,18 +8,19 @@ class Wall {
     this.y = ranint(10, H-10-71-this.H);
     this.passed = false;
     this.checked = false;
+    this.color = '#000'
   }
 
   draw() {
     ctx.beginPath();
-    ctx.fillStyle = 'rgba(255, 0, 0, 0.6)';
+    ctx.fillStyle = /*'rgba(255, 0, 0, 0.6)'*/ this.color;
     ctx.fillRect(this.x, 0, this.W, this.y);
     ctx.fillRect(this.x, this.y+this.H, this.W, H-this.y-this.H-71)
     ctx.closePath();
   }
 
   update(i) {
-    this.x -= (speed+score+1)
+    this.x -= (speed+score/2+1) // *** change speed mod here
     if (this.x < -this.W) {
       walls.splice(i, 1)
     } else {

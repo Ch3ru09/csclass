@@ -1,6 +1,6 @@
 const canvas = document.getElementsByTagName('canvas')[0];
 const ctx = canvas.getContext('2d');
-var H = canvas.height = innerHeight;
+var H = canvas.height = 790/*Math.min(innerHeight, 790)*/;
 var W = canvas.width = innerWidth;
 
 var play = true;
@@ -15,17 +15,17 @@ var speed = 3;
 
 var hitboxes = true;
 
-let dc = 1;
+let dc = 2;
 
 function movebgr() {
   background.src = './assets/background.png';
   background_x -= speed;
-
-  if (background_x < -(background.width - W)) {
+  temp = Math.max(H/700, 11/10)
+  if (W > background_x+background.width/temp) {
     background_x = 0
   } 
   ctx.beginPath();
-  temp = Math.max(innerHeight/700, 11/10)
+  
   ctx.drawImage(background, background_x, H-background.height/temp, background.width/temp, background.height/temp);
   ctx.closePath();
 }
@@ -60,20 +60,30 @@ function collision(wall, b) {
     score++;
     wall.passed = true;
   }
-
-  if (detectifdeath(wall, b) == 'ded') {
+  const isDeath = detectifdeath(wall, b)
+  if (isDeath && isDeath[0] == 'ded') {
     // ctx.clearRect(0, 0, W, H)
     // movebgr()
     // bird.update()
     // walls.forEach(w => {
     //   w.draw()
     // })
-    if (dc == 0) {
-      play = false;
-      return
-    } else {
-      dc--
-    }
+    isDeath[1].color = '#f00'
+    isDeath[1].draw();
+    ded()
+    return
+  }
+  return
+}
+
+function ded() {
+  if (dc == 0) {
+    play = false;
+    dc = 1;
+    return
+  } else {
+    dc--
+    ded()
   }
 }
 
@@ -85,11 +95,11 @@ function detectifdeath(wall, b) {
     for (let j = 0; j < 2; j++){
       var dy = j*wall.H;
       if (getDist([wall.x+a, wall.y+dy], b) == true) {
-        return 'ded'
+        return ['ded', wall]
       }
     }
   }
-  return 'ded'
+  return ['ded', wall]
 }
 
 function getDist(point, b) {
@@ -119,7 +129,7 @@ function reset() {
 }
 
 function animate() {
-  H = canvas.height = innerHeight;
+  H = canvas.height = Math.min(innerHeight, 790);
   W = canvas.width = innerWidth;
   
   
