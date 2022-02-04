@@ -138,7 +138,12 @@ function animate() {
     movebgr();
 
     createWalls();
-    bird.update();
+    if (play == true) {
+      bird.update();
+    } else {
+      bird.draw()
+    }
+    
     showscore();
     if (play == true) {
       requestAnimationFrame(animate)
