@@ -66,14 +66,13 @@ const SFX = new function() {
   this.die = new Audio();
   this.played = false;
 };
-const ground = new class {
-  constructor() {
-    this.sprite = new Image();
-    this.x = 0;
-    this.y = 0;
-    this.stop = false;
-  }
-  draw() {
+const ground = new function() {
+  this.sprite = new Image();
+  this.x = 0;
+  this.y = 0;
+  this.stop = false;
+
+  this.draw = () => {
     if (this.stop == false) {
       this.sprite.height *= size;
       this.sprite.width *= size;
@@ -87,20 +86,19 @@ const ground = new class {
       ctx.drawImage(this.sprite,this.x+deviation,this.y, this.sprite.width, this.sprite.height);
     }
   }
-  update() {
+  this.update = () => {
     if(state.curr != state.Play) return;
     this.x -= dx;
-    this.x = this.x % (this.sprite.width/4);
+    this.x = this.x % (this.sprite.width);
   }
 };
-const bg = new class {
-  constructor() {
-    this.sprite = new Image();
-    this.x = 0;
-    this.y = 0;
-    this.stop = false;
-  }
-  draw() {
+const bg = new function() {
+  this.sprite = new Image();
+  this.x = 0;
+  this.y = 0;
+  this.stop = false;
+
+  this.draw = () => {
     if (this.stop == false) {
       this.sprite.height *= size;
       this.sprite.width *= size;
@@ -113,7 +111,7 @@ const bg = new class {
         ctx.drawImage(this.sprite,this.x+deviation,this.y, this.sprite.width, this.sprite.height);
     }
   }
-  update() {
+  this.update = () => {
     if(state.curr != state.Play) return;
     this.x -= 1;
     this.x = this.x % (this.sprite.width);
@@ -125,58 +123,76 @@ const pipe = new function() {
     this.gap = 85;
     this.moved = true;
     this.pipes = [];
-    
+    this.w = 0;
+    this.h = 0;
+    this.stop = false;
+
     this.draw = () => {
       for(let i = 0;i<this.pipes.length;i++) {
-
         let p = this.pipes[i];
-        ctx.drawImage(this.top.sprite, p.x, p.y)
-        ctx.drawImage(this.bot.sprite, p.x, p.y+parseFloat(this.top.sprite.height)+this.gap)
+        ctx.drawImage(this.top.sprite, p.x, p.y, this.w, this.h)
+        ctx.drawImage(this.bot.sprite, p.x, p.y+parseFloat(this.h)+this.gap, this.w, this.h)
       }
     }
     this.update = () => {
       if(state.curr!=state.Play) return;
-      if(frames%100 == 0) {
+      if (this.stop == false) {
+        this.gap *= size;
+        this.w = this.top.sprite.width*size;
+        this.h = this.top.sprite.height*size;
+        this.stop = true
+        console.log(this.stop)
+      }
+      if (frames == 0) {
+        this.pipes.push({x:parseFloat(W),y:-210*Math.min(Math.random()+1,1.8)}); 
+      } if(frames%100 == 0) {
         this.pipes.push({x:parseFloat(W),y:-210*Math.min(Math.random()+1,1.8)});
       }
       this.pipes.forEach(pipe => {
         pipe.x -= dx;
       })
-      if(this.pipes.length&&this.pipes[0].x < -this.top.sprite.width*size) {
+      if(this.pipes.length&&this.pipes[0].x < -this.w) {
         this.pipes.shift();
         this.moved = true;
       }
     }
 };
 
-const bird = new class {
-  constructor() {
-    this.animations = [
-      {sprite : new Image()},
-      {sprite : new Image()},
-      {sprite : new Image()},
-      {sprite : new Image()},
-    ],
-    this.rotatation = 0,
-    this.x = W/8;
-    this.y = 100;
-    this.speed = 0;
-    this.gravity = 0.125;
-    this.thrust = 3.6;
-    this.frame = 0;
-    this.stop = false;
-  }
-  draw() {
-    var h = this.animations[this.frame].sprite.height * size;
-    var w = this.animations[this.frame].sprite.width * size;
+const bird = new function() {
+  this.animations = [
+    {sprite : new Image()},
+    {sprite : new Image()},
+    {sprite : new Image()},
+    {sprite : new Image()},
+  ],
+  this.rotatation = 0,
+  this.x = W/8;
+  this.y = 100;
+  this.speed = 0;
+  this.gravity = 0.125;
+  this.thrust = 3.6;
+  this.frame = 0;
+  this.stop = false;
+  this.h;
+  this.w;
+  
+  this.draw = () => {
     ctx.save();
     ctx.translate(this.x,this.y);
     ctx.rotate(this.rotatation*RAD);
-    ctx.drawImage(this.animations[this.frame].sprite,-w/2,-h/2, w, h);
+    ctx.drawImage(this.animations[this.frame].sprite,-this.w/2,-this.h/2, this.w,this.h);
     ctx.restore();
   }
-  update() {
-    let r = parseFloat( this.animations[0].sprite.width)/2;
+  this.update = () => {
+    if (this.stop === false) {
+      this.h = this.animations[this.frame].sprite.height * size;
+      this.w = this.animations[this.frame].sprite.width * size;
+      this.gravity *= size;
+      this.thrust *= size;
+      this.stop = true;
+    }
+    
+    let r = parseFloat(this.animations[0].sprite.width)/2;
     switch (state.curr) {
       case state.getReady :
         this.rotatation = 0;
@@ -212,21 +228,21 @@ const bird = new class {
     }
     this.frame = this.frame%this.animations.length;       
   }
-  flap() {
+  this.flap = () => {
     if(this.y > 0) {
       SFX.flap.play();
       this.speed = -this.thrust;
     }
   }
-  setRotation() {
+  this.setRotation = () => {
       if(this.speed <= 0) {
         this.rotatation = Math.max(-25, -25 * this.speed/(-1*this.thrust));
       }
-      else if(this.speed > 0 ) {
+      else if(this.speed > 0) {
         this.rotatation = Math.min(90, 90 * this.speed/(this.thrust*2));
       }
   }
-  collisioned() {
+  this.collisioned = () => {
     if(!pipe.pipes.length) return;
     let bird = this.animations[0].sprite;
 
@@ -242,9 +258,9 @@ const bird = new class {
     
 
     let r = bird.height/4 +bird.width/4;
-    let roof = y + parseFloat(pipe.top.sprite.height);
+    let roof = y + parseFloat(pipe.h);
     let floor = roof + pipe.gap;
-    let w = parseFloat(pipe.top.sprite.width);
+    let w = parseFloat(pipe.w);
     if(this.x + r >= x) {
       if(this.x + r < x + w) {
         if(this.y - r <= roof || this.y + r>= floor) {
@@ -259,23 +275,23 @@ const bird = new class {
     }
   }
 };
-const UI = {
-  getReady : {sprite : new Image()},
-  gameOver : {sprite : new Image()},
-  tap : [
+const UI = new function() {
+  this.getReady = {sprite : new Image()};
+  this.gameOver = {sprite : new Image()};
+  this.tap = [
     {sprite : new Image()},
     {sprite : new Image()}
-  ],
-  score : {
+  ];
+  this.score = {
     curr : 0,
     best : 0,
-  },
-  x : 0,
-  y : 0,
-  tx : 0,
-  ty : 0,
-  frame : 0,
-  draw : function() {
+  };
+  this.x = 0;
+  this.y = 0;
+  this.tx = 0;
+  this.ty = 0;
+  this.frame = 0;
+  this.draw = () => {
     switch (state.curr) {
       case state.getReady :
         this.y = parseFloat(H-this.getReady.sprite.height)/2;
@@ -295,8 +311,8 @@ const UI = {
         break;
     }
     this.drawScore();
-  },
-  drawScore : function() {
+  };
+  this.drawScore = () => {
       ctx.fillStyle = "#FFFFFF";
       ctx.strokeStyle = "#000000";
     switch (state.curr) {
@@ -324,13 +340,12 @@ const UI = {
         }
         break;
     }
-  },
-  update : function() {
+  };
+  this.update = () => {
     if(state.curr == state.Play) return;
     this.frame += (frames % 10==0) ? 1 :0;
     this.frame = this.frame % this.tap.length;
-  }
-
+  };
 };
 
 ground.sprite.src="img/ground.png";
@@ -374,7 +389,7 @@ function draw() {
   ctx.fillRect(0,0,W,H)
   bg.draw();
   pipe.draw();
-  
+
   bird.draw();
   ground.draw();
   UI.draw();
