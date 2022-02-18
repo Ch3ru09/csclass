@@ -138,8 +138,8 @@ const pipe = new function() {
       if(state.curr!=state.Play) return;
       if (this.stop == false) {
         this.gap *= size;
-        this.w = this.top.sprite.width*size;
-        this.h = this.top.sprite.height*size;
+        this.w = this.top.sprite.width * size;
+        this.h = this.top.sprite.height * size;
         this.stop = true
         console.log(this.stop)
       }
@@ -245,10 +245,15 @@ const bird = new function() {
   this.collisioned = () => {
     if(!pipe.pipes.length) return;
     let bird = this.animations[0].sprite;
+    let r = bird.height*size/4 +bird.height*size/4;
 
     var x, y
     pipe.pipes.every((e,i) => {
-      if (e.x > bird.x) {
+      if (e.x <= this.x+r && e.x+pipe.w >= this.x - r) {
+        x = pipe.pipes[i].x;
+        y = pipe.pipes[i].y;
+        return false
+      } else if (e.x >= this.x-r) {
         x = pipe.pipes[i].x;
         y = pipe.pipes[i].y;
         return false
@@ -257,7 +262,7 @@ const bird = new function() {
     })
     
 
-    let r = bird.height/4 +bird.width/4;
+    
     let roof = y + parseFloat(pipe.h);
     let floor = roof + pipe.gap;
     let w = parseFloat(pipe.w);
@@ -378,7 +383,7 @@ function gameLoop() {
 }
 
 function update() {
-  bird.update();  
+  bird.update();
   ground.update();
   bg.update();
   pipe.update();
