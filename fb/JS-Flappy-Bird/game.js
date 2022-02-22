@@ -134,6 +134,17 @@ const pipe = new function() {
         ctx.drawImage(this.bot.sprite, p.x, p.y+parseFloat(this.h)+this.gap, this.w, this.h)
       }
     }
+
+    this.drawHitboxes = () => {
+      this.pipes.forEach(p => {
+        ctx.beginPath();
+        ctx.fillStyle = '';
+        ctx.fillRect(p.x, p.y, this.w, this.h);
+        ctx.fillRect(p.x, p.y + parseFloat(this.h)+this.gap, this.w, this.h); 
+        ctx.closePath();
+      })
+    }
+
     this.update = () => {
       if(state.curr!=state.Play) return;
       if (this.stop == false) {
@@ -141,7 +152,6 @@ const pipe = new function() {
         this.w = this.top.sprite.width * size;
         this.h = this.top.sprite.height * size;
         this.stop = true
-        console.log(this.stop)
       }
       if (frames == 0) {
         this.pipes.push({x:parseFloat(W),y:-210*Math.min(Math.random()+1,1.8)}); 
@@ -175,6 +185,7 @@ const bird = new function() {
   this.stop = false;
   this.h;
   this.w;
+  this.r;
   
   this.draw = () => {
     ctx.save();
@@ -183,6 +194,15 @@ const bird = new function() {
     ctx.drawImage(this.animations[this.frame].sprite,-this.w/2,-this.h/2, this.w,this.h);
     ctx.restore();
   }
+
+  this.drawHitboxes = () => {
+    ctx.beginPath();
+    ctx.fillStyle = '#000';
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, false);
+    ctx.fill();
+    ctx.closePath();
+  };
+
   this.update = () => {
     if (this.stop === false) {
       this.h = this.animations[this.frame].sprite.height * size;
@@ -245,7 +265,8 @@ const bird = new function() {
   this.collisioned = () => {
     if(!pipe.pipes.length) return;
     let bird = this.animations[0].sprite;
-    let r = bird.height*size/4 +bird.height*size/4;
+    let r = (bird.height*size)/4 +(bird.height*size)/4;
+    this.r = r;
 
     var x, y
     pipe.pipes.every((e,i) => {
@@ -378,6 +399,7 @@ gameLoop();
 function gameLoop() { 
   update();
   draw();
+  drawHitboxes();
   frames++;
   requestAnimationFrame(gameLoop);
 }
@@ -389,6 +411,7 @@ function update() {
   pipe.update();
   UI.update();
 }
+
 function draw() {
   ctx.fillStyle = "#30c0df";
   ctx.fillRect(0,0,W,H)
@@ -400,3 +423,7 @@ function draw() {
   UI.draw();
 }
 
+function drawHitboxes() {
+  pipe.drawHitboxes();
+  bird.drawHitboxes();
+}
