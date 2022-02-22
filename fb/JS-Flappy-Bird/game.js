@@ -49,7 +49,7 @@ screen.onkeydown = function keyDown(e) {
 }
 
 
-
+const pipeCreation = 150;
 let frames = 0;
 let dx = 2;
 const state = new function() {
@@ -71,6 +71,7 @@ const ground = new function() {
   this.x = 0;
   this.y = 0;
   this.stop = false;
+  this.times;
 
   this.draw = () => {
     if (this.stop == false) {
@@ -89,7 +90,9 @@ const ground = new function() {
   this.update = () => {
     if(state.curr != state.Play) return;
     this.x -= dx;
-    this.x = this.x % (this.sprite.width);
+    if (this.x <= -this.sprite.width) {
+      this.x = 0;
+    }
   }
 };
 const bg = new function() {
@@ -133,16 +136,20 @@ const pipe = new function() {
         ctx.drawImage(this.top.sprite, p.x, p.y, this.w, this.h)
         ctx.drawImage(this.bot.sprite, p.x, p.y+parseFloat(this.h)+this.gap, this.w, this.h)
       }
-    }
+    }                                                                                                                                                                                                                                                           
 
     this.drawHitboxes = () => {
-      this.pipes.forEach(p => {
-        ctx.beginPath();
-        ctx.fillStyle = '';
+      if (this.pipes.length < 0) return
+      for (let i = 0; i < Math.min(this.pipes.length, 2); i++) {
+        let p = this.pipes[i];
+        let grad = ctx.createLinearGradient(p.x, p.y, p.x+this.w, p.y)
+        grad.addColorStop(0, 'rgba(0, 0, 0, 1)'); 
+        grad.addColorStop(0.5, 'rgba(0, 0, 0, 0.5)');
+        grad.addColorStop(1, 'rgba(0, 0, 0, 1)');
+        ctx.fillStyle = grad;
         ctx.fillRect(p.x, p.y, this.w, this.h);
-        ctx.fillRect(p.x, p.y + parseFloat(this.h)+this.gap, this.w, this.h); 
-        ctx.closePath();
-      })
+        ctx.fillRect(p.x, p.y+parseFloat(this.h)+this.gap, this.w, this.h);
+      }
     }
 
     this.update = () => {
@@ -155,7 +162,7 @@ const pipe = new function() {
       }
       if (frames == 0) {
         this.pipes.push({x:parseFloat(W),y:-210*Math.min(Math.random()+1,1.8)}); 
-      } if(frames%100 == 0) {
+      } if(frames%pipeCreation == 0) {
         this.pipes.push({x:parseFloat(W),y:-210*Math.min(Math.random()+1,1.8)});
       }
       this.pipes.forEach(pipe => {
@@ -197,7 +204,10 @@ const bird = new function() {
 
   this.drawHitboxes = () => {
     ctx.beginPath();
-    ctx.fillStyle = '#000';
+    let grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r)
+    grad.addColorStop(0.3, 'rgba(100, 0, 255, 0.5)');
+    grad.addColorStop(1, 'rgba(100, 0, 200, 1)');
+    ctx.fillStyle = grad;
     ctx.arc(this.x, this.y, this.r, 0, Math.PI*2, false);
     ctx.fill();
     ctx.closePath();
@@ -213,6 +223,7 @@ const bird = new function() {
     }
     
     let r = parseFloat(this.animations[0].sprite.width)/2;
+    this.r = r;
     switch (state.curr) {
       case state.getReady :
         this.rotatation = 0;
@@ -266,17 +277,16 @@ const bird = new function() {
     if(!pipe.pipes.length) return;
     let bird = this.animations[0].sprite;
     let r = (bird.height*size)/4 +(bird.height*size)/4;
-    this.r = r;
 
     var x, y
     pipe.pipes.every((e,i) => {
       if (e.x <= this.x+r && e.x+pipe.w >= this.x - r) {
-        x = pipe.pipes[i].x;
-        y = pipe.pipes[i].y;
+        x = e.x;
+        y = e.y;
         return false
       } else if (e.x >= this.x-r) {
-        x = pipe.pipes[i].x;
-        y = pipe.pipes[i].y;
+        x = e.x;
+        y = e.y;
         return false
       }
       return true
@@ -396,10 +406,9 @@ SFX.die.src = "sfx/die.wav"
 
 gameLoop();
 
-function gameLoop() { 
+function gameLoop() {
   update();
   draw();
-  drawHitboxes();
   frames++;
   requestAnimationFrame(gameLoop);
 }
@@ -417,8 +426,10 @@ function draw() {
   ctx.fillRect(0,0,W,H)
   bg.draw();
   pipe.draw();
-
   bird.draw();
+
+  // drawHitboxes();
+
   ground.draw();
   UI.draw();
 }
