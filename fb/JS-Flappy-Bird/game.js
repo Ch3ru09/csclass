@@ -1,8 +1,8 @@
 const RAD = Math.PI/180;
 const screen = document.getElementById('canvas');
-const W = screen.width = innerWidth;
+const W = screen.width = innerWidth/3;
 const H = screen.height = innerHeight;
-const ctx = screen.getContext("2d");
+var ctx = screen.getContext("2d");
 
 screen.tabIndex = 1;
 screen.addEventListener("click", () => {
@@ -48,8 +48,8 @@ screen.onkeydown = function keyDown(e) {
   }
 }
 
-
 const pipeCreation = 150;
+
 let frames = 0;
 let dx = 2;
 const state = new function() {
@@ -183,7 +183,7 @@ const bird = new function() {
     {sprite : new Image()},
   ],
   this.rotatation = 0,
-  this.x = W/8;
+  this.x = Math.max(W/8, 100);
   this.y = 100;
   this.speed = 0;
   this.gravity = 0.125;
@@ -385,7 +385,7 @@ const UI = new function() {
 };
 
 ground.sprite.src="img/ground.png";
-const size = H*0.05/ground.sprite.height + 1
+let size = H*0.05/ground.sprite.height + 1
 
 bg.sprite.src="img/BG.png";
 pipe.top.sprite.src="img/toppipe.png";
@@ -404,11 +404,20 @@ SFX.score.src = "sfx/score.wav"
 SFX.hit.src = "sfx/hit.wav"
 SFX.die.src = "sfx/die.wav"
 
+var reduceFactor = 4;
+var nbOpp = 20;
+
+const opp = [];
+createOpponents();
+
+
 gameLoop();
 
 function gameLoop() {
+  ctx = screen.getContext("2d");
   update();
   draw();
+  createMini();
   frames++;
   requestAnimationFrame(gameLoop);
 }
@@ -432,6 +441,34 @@ function draw() {
 
   ground.draw();
   UI.draw();
+}
+
+function createMini() {
+  opp.forEach(g => {
+    ctx = g.getContext('2d');
+    ctx.scale(1/reduceFactor, 1/reduceFactor);
+    draw();
+    ctx.scale(reduceFactor, reduceFactor);
+  })
+}
+
+function createOpponents() {
+  for (let i = 0; i < nbOpp; i++) {
+    game = document.createElement('canvas');
+    document.body.appendChild(game);
+
+    game.width = innerWidth/(3*reduceFactor);
+    game.height = innerHeight/reduceFactor;
+    if (i > reduceFactor**2) {
+      var a = `left:${((i%reduceFactor)*innerWidth/(3*reduceFactor)) + 2*innerWidth/(3*reduceFactor) - 2}px` 
+    } else {
+      var a = `left:${((i%reduceFactor)*innerWidth/(3*reduceFactor)) - 2}px`;
+    }
+    
+    game.style = `${a}; top:${Math.floor(i/reduceFactor)*innerHeight/reduceFactor}px`
+    opp.push(game)
+  }
+  
 }
 
 function drawHitboxes() {

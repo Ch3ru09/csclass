@@ -1,9 +1,21 @@
 * {
   margin: 0;
 }
-#canvas {
-    background-color:#30c0df;
-    display: block;
-    padding: auto;
-    
+
+body {
+  background-color: /* #30bfdf11*/ #30c0df11;
 }
+
+canvas {
+  background-color:#30c0df;
+  border: #000 solid 1px;
+  display: block;
+  padding: auto;
+  position: absolute;
+}
+
+#canvas {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
