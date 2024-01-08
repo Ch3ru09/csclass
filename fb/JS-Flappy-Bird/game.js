@@ -1,6 +1,7 @@
 const RAD = Math.PI/180;
 const screen = document.getElementById('canvas');
-const W = screen.width = innerWidth/3;
+screen.width = innerWidth;
+const W = screen.width/3;
 const H = screen.height = innerHeight;
 var ctx = screen.getContext("2d");
 
@@ -28,23 +29,27 @@ screen.addEventListener("click", () => {
 screen.onkeydown = function keyDown(e) {
   // *** Space Key or W key or arrow up
   if (e.keyCode == 32 || e.keyCode == 87 || e.keyCode == 38) { 
-    switch (state.curr) {
-      case state.getReady :
-        state.curr = state.Play;
-        SFX.start.play();
-        break;
-      case state.Play :
-        bird.flap();
-        break;
-      case state.gameOver :
-        state.curr = state.getReady;
-        bird.speed = 0;
-        bird.y = 100;
-        pipe.pipes=[];
-        UI.score.curr = 0;
-        SFX.played=false;
-        break;
-    }
+    handdleKeyDown()
+  }
+}
+
+function handdleKeyDown() {
+  switch (state.curr) {
+    case state.getReady :
+      state.curr = state.Play;
+      SFX.start.play();
+      break;
+    case state.Play :
+      bird.flap();
+      break;
+    case state.gameOver :
+      state.curr = state.getReady;
+      bird.speed = 0;
+      bird.y = 100;
+      pipe.pipes=[];
+      UI.score.curr = 0;
+      SFX.played=false;
+      break;
   }
 }
 
@@ -404,20 +409,27 @@ SFX.score.src = "sfx/score.wav"
 SFX.hit.src = "sfx/hit.wav"
 SFX.die.src = "sfx/die.wav"
 
-var reduceFactor = 4;
-var nbOpp = 20;
+var nbOpp = 0;
+var reduceFactor = Math.ceil(Math.sqrt(nbOpp/2));
+var split = 3;
+// var reduceFactor = 4;
+// var nbOpp = reduceFactor*reduceFactor*2;
 
 const opp = [];
 createOpponents();
 
 
-gameLoop();
+window.addEventListener('load', () => {
+  gameLoop();
+});
 
 function gameLoop() {
   ctx = screen.getContext("2d");
   update();
   draw();
-  createMini();
+  if (nbOpp !== 0) {
+    createMini();
+  }
   frames++;
   requestAnimationFrame(gameLoop);
 }
@@ -432,7 +444,8 @@ function update() {
 
 function draw() {
   ctx.fillStyle = "#30c0df";
-  ctx.fillRect(0,0,W,H)
+  ctx.fillRect(0,0,screen.width,H);
+  ctx.translate(W, 0);
   bg.draw();
   pipe.draw();
   bird.draw();
@@ -441,6 +454,11 @@ function draw() {
 
   ground.draw();
   UI.draw();
+
+  ctx.fillStyle = "#30c0df"; 
+  ctx.fillRect(W, 0, 2*W, H);
+  ctx.translate(-W, 0);
+  ctx.fillRect(0, 0, W, H);
 }
 
 function createMini() {
@@ -457,15 +475,20 @@ function createOpponents() {
     game = document.createElement('canvas');
     document.body.appendChild(game);
 
-    game.width = innerWidth/(3*reduceFactor);
+    game.width = innerWidth/(split*reduceFactor);
     game.height = innerHeight/reduceFactor;
-    if (i > reduceFactor**2) {
-      var a = `left:${((i%reduceFactor)*innerWidth/(3*reduceFactor)) + 2*innerWidth/(3*reduceFactor) - 2}px` 
+
+    var left, top
+    var nbPerSide = reduceFactor**2;
+    if (i >= nbPerSide) {
+      left = `left:${((i%reduceFactor)*innerWidth/(split*reduceFactor)) + (split-1)*innerWidth/(split) - 2}px`;
+      top = `top:${Math.floor((i%nbPerSide)/reduceFactor)*innerHeight/(reduceFactor*split/3)}px`;
     } else {
-      var a = `left:${((i%reduceFactor)*innerWidth/(3*reduceFactor)) - 2}px`;
+      left = `left:${((i%reduceFactor)*innerWidth/(split*reduceFactor)) - 2}px`;
+      top = `top:${Math.floor((i%nbPerSide)/reduceFactor)*innerHeight/(reduceFactor*split/3)}px`;
     }
-    
-    game.style = `${a}; top:${Math.floor(i/reduceFactor)*innerHeight/reduceFactor}px`
+    console.log(left, top)
+    game.style = `${left}; ${top}`
     opp.push(game)
   }
   
